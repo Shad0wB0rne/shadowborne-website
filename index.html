@@ -71,8 +71,29 @@
         <div class="relative z-30 transform scale-90 hover:scale-100 transition duration-500 ease-out top-[60px] left-[50px]">
             <div class="absolute inset-0 bg-[#00f3ff]/5 blur-xl rounded-full"></div>
             
-            <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=5019542" 
-                    style='border:none; width:430px; height:100px;' scrolling="no"></iframe>
+            <div class="relative group w-full max-w-[430px]">
+    <div class="absolute -inset-0.5 bg-gradient-to-r from-[#00f3ff] to-[#ff003c] opacity-30 blur-sm group-hover:opacity-75 transition duration-500"></div>
+    
+    <div class="lg:col-span-5 order-1 lg:order-2 flex justify-center items-center">
+    
+    <div class="relative w-[430px] h-[100px]">
+        
+        <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=5019542" 
+                style="border:none; width:100%; height:100%;" 
+                scrolling="no"
+                class="relative z-0">
+        </iframe>
+
+        <a href="https://tryhackme.com/p/ShadowBorne"
+           target="_blank" 
+           class="absolute inset-0 z-50 cursor-pointer bg-transparent"
+           aria-label="Visit TryHackMe Profile">
+        </a>
+        
+    </div>
+
+</div>
+</div>
         </div>
 
     </div>
