@@ -41,6 +41,10 @@ body {
 .glow-cyan { text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
 .glow-pink { text-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
 .glow-green { text-shadow: 0 0 15px rgba(0, 255, 65, 0.5); }
+.glow-purple { text-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
+.glow-yellow { text-shadow: 0 0 15px rgba(251, 191, 36, 0.5); }
+.glow-white  { text-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+
 
 /* Noise Texture */
 .noise-layer {
