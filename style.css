@@ -1,3 +1,35 @@
+/* --- CORE STABILIZATION & SCROLLBAR HIDING --- */
+html {
+    overflow-y: scroll;       /* Prevent screen jerk on load */
+    overflow-x: hidden;       /* Prevent horizontal scroll */
+    scroll-behavior: smooth;  /* Enable smooth anchor jumping */
+    
+    /* Hide Scrollbar (Firefox/IE/Edge) */
+    scrollbar-width: none; 
+    -ms-overflow-style: none;
+}
+
+/* Hide Scrollbar (Chrome/Safari/Opera) */
+html::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #050505; 
+}
+
+/* Fix Overlay Positioning */
+.crt-overlay, .noise-layer, .cyber-grid {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
 /* style.css */
 :root {
     --neon-green: #00FF41;

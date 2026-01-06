@@ -8,31 +8,47 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap');
         
+        /* --- GLOBAL STABILIZATION & STEALTH SCROLL --- */
+        html { 
+            overflow-y: scroll; /* Stops the screen jerk/flicker */
+            overflow-x: hidden; /* Prevents horizontal scroll */
+            scrollbar-width: none; /* Firefox: Hide scrollbar */
+            -ms-overflow-style: none;  /* IE/Edge: Hide scrollbar */
+        }
+        
+        /* Chrome/Safari/Opera: Hide scrollbar */
+        html::-webkit-scrollbar { 
+            display: none; 
+        }
+
         body { 
             background-color: #050505; 
             color: #e5e5e5; 
             font-family: 'JetBrains Mono', monospace; 
-            overflow-x: hidden;
+            overflow-x: hidden; 
         }
 
         .cyber-font { font-family: 'JetBrains Mono', monospace; letter-spacing: -2px; }
-        
-        /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #333; border: 1px solid #000; }
-        ::-webkit-scrollbar-thumb:hover { background: #00f3ff; }
 
-        /* CRT EFFECT */
+        /* --- FIXED SCANLINE (The Root Cause of the Jerk) --- */
         .scanline {
-            width: 100%; height: 100px; z-index: 5;
-            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0, 243, 255, 0.03) 50%, rgba(0,0,0,0) 100%);
-            opacity: 0.5; position: absolute; bottom: 100%;
-            animation: scanline 8s linear infinite; pointer-events: none;
+            width: 100vw; 
+            height: 100vh;
+            position: fixed; /* FIXED: Prevents it from resizing the page */
+            top: 0;
+            left: 0;
+            z-index: 50;
+            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0, 243, 255, 0.05) 50%, rgba(0,0,0,0) 100%);
+            opacity: 0.1;
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
         }
-        @keyframes scanline { 0% { bottom: 100%; } 100% { bottom: -100%; } }
+        @keyframes scanline { 
+            0% { transform: translateY(-100%); } 
+            100% { transform: translateY(100%); } 
+        }
 
-        /* BACKGROUND GRID */
+        /* --- BACKGROUND GRID --- */
         .bg-grid {
             background-size: 40px 40px;
             background-image: 
@@ -41,6 +57,14 @@
             position: fixed; inset: 0; z-index: 0; pointer-events: none;
             mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
         }
+
+        /* --- GLOW UTILS --- */
+        .glow-cyan { text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
+        .glow-pink { text-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
+        .glow-green { text-shadow: 0 0 15px rgba(0, 255, 65, 0.5); }
+        .glow-purple { text-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
+        .glow-yellow { text-shadow: 0 0 15px rgba(251, 191, 36, 0.5); }
+        .glow-white  { text-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
 
         /* GLITCH ANIMATION FOR HOVER */
         @keyframes glitch-skew {
@@ -52,6 +76,12 @@
             100% { transform: skew(0deg); }
         }
         .hover-glitch:hover { animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite; }
+        
+        /* Internal Scrollbars (for text areas) - Keep these visible but styled */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00f3ff; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/argon2-browser/1.18.0/argon2-bundled.min.js"></script>
 </head>

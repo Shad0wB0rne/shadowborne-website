@@ -14,11 +14,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="antialiased text-gray-300 overflow-x-hidden selection:bg-[#ff003c] selection:text-white">
+<body class="antialiased text-gray-300 overflow-x-hidden selection:bg-[#ff003c] selection:text-white bg-[#050505]">
 
     <div class="crt-overlay"></div>
     <div class="noise-layer"></div>
     <div class="cyber-grid"></div>
+
     <nav class="fixed w-full z-50 px-6 py-4 bg-[#030303]/80 backdrop-blur-md border-b border-[#00f3ff]/10">
         <div class="max-w-[1800px] mx-auto flex justify-between items-center">
             <div class="flex items-center gap-2 group cursor-pointer">
@@ -30,6 +31,7 @@
             <div class="hidden md:flex space-x-10 mono text-[10px] uppercase tracking-[0.2em]">
                 <a href="#profile" class="nav-link hover:text-[#00f3ff] transition">Identity</a>
                 <a href="#toolbox" class="nav-link hover:text-[#ff003c] transition">Arsenal</a>
+                <a href="#contact" class="nav-link hover:text-[#fbbf24] transition">Uplink</a>
                 <a href="#console" class="nav-link hover:text-[#00FF41] transition">Terminal</a>
             </div>
         </div>
@@ -38,9 +40,7 @@
     <main class="container-wide pt-32 px-6">
 
         <section id="profile" class="grid lg:grid-cols-12 gap-12 items-center mb-40 relative z-10">
-
             <div class="lg:col-span-7 pt-10 order-2 lg:order-1">
-
                 <div class="flex items-center gap-3 mb-8">
                     <div
                         class="px-2 py-0.5 border border-[#ff003c] text-[#ff003c] mono text-[9px] bg-[#ff003c]/10 tracking-widest shadow-[0_0_10px_rgba(255,0,60,0.2)]">
@@ -63,12 +63,23 @@
                     I simply emerge from the shadows you created.
                 </p>
 
-                <div class="mt-8">
+                <div class="mt-8 flex flex-wrap gap-4">
                     <a href="certificates.html"
                         class="inline-flex items-center gap-3 px-6 py-3 bg-[#0a0a0a] border border-[#ff003c]/30 hover:border-[#ff003c] hover:bg-[#ff003c]/10 transition-all duration-300 group">
                         <span class="w-2 h-2 bg-[#ff003c] rounded-full animate-pulse"></span>
-                        <span class="text-white font-mono text-sm tracking-widest">ACCESS_CREDENTIALS_DB</span>
+                        <span class="text-white font-mono text-sm tracking-widest">ACCESS_CREDENTIALS</span>
                         <svg class="w-4 h-4 text-[#ff003c] group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="arsenal.html"
+                        class="inline-flex items-center gap-3 px-6 py-3 bg-[#0a0a0a] border border-[#00f3ff]/30 hover:border-[#00f3ff] hover:bg-[#00f3ff]/10 transition-all duration-300 group">
+                        <span class="w-2 h-2 bg-[#00f3ff] rounded-full animate-pulse"></span>
+                        <span class="text-white font-mono text-sm tracking-widest">LAUNCH_ARSENAL</span>
+                        <svg class="w-4 h-4 text-[#00f3ff] group-hover:translate-x-1 transition-transform" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
@@ -76,7 +87,7 @@
                     </a>
                 </div>
 
-                <div class="flex gap-4 mono text-[10px]">
+                <div class="flex gap-4 mono text-[10px] mt-10">
                     <div class="text-gray-500">TOR_CONNECTION: <span
                             class="text-[#00FF41] animate-pulse">ESTABLISHED</span></div>
                     <div class="text-gray-500">IP_ADDRESS: <span class="text-[#ff003c]">SPOOFED</span></div>
@@ -85,7 +96,6 @@
 
             <div
                 class="lg:col-span-5 flex flex-col items-center justify-center relative mt-10 lg:mt-0 order-1 lg:order-2">
-
                 <div
                     class="absolute w-[400px] h-[400px] border border-[#00f3ff]/20 rounded-full animate-[spin_20s_linear_infinite] shadow-[0_0_30px_rgba(0,243,255,0.1)] pointer-events-none">
                 </div>
@@ -109,31 +119,22 @@
                 <div
                     class="relative z-30 transform scale-90 hover:scale-100 transition duration-500 ease-out top-[60px] left-[50px]">
                     <div class="absolute inset-0 bg-[#00f3ff]/5 blur-xl rounded-full"></div>
-
                     <div class="relative group w-full max-w-[430px]">
                         <div
                             class="absolute -inset-0.5 bg-gradient-to-r from-[#00f3ff] to-[#ff003c] opacity-30 blur-sm group-hover:opacity-75 transition duration-500">
                         </div>
-
                         <div class="lg:col-span-5 order-1 lg:order-2 flex justify-center items-center">
-
                             <div class="relative w-[430px] h-[100px]">
-
                                 <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=5019542"
-                                    style="border:none; width:100%; height:100%;" scrolling="no" class="relative z-0">
-                                </iframe>
-
+                                    style="border:none; width:100%; height:100%;" scrolling="no"
+                                    class="relative z-0"></iframe>
                                 <a href="https://tryhackme.com/p/ShadowBorne" target="_blank"
                                     class="absolute inset-0 z-50 cursor-pointer bg-transparent"
-                                    aria-label="Visit TryHackMe Profile">
-                                </a>
-
+                                    aria-label="Visit TryHackMe Profile"></a>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -146,8 +147,6 @@
                         <li>» Nmap <span class="text-[#00f3ff]/50">// Discovery</span></li>
                         <li>» Burp Suite Pro <span class="text-[#00f3ff]/50">// Proxy</span></li>
                         <li>» FFUF <span class="text-[#00f3ff]/50">// Fuzzing</span></li>
-                        <li>» Masscan <span class="text-[#00f3ff]/50">// Scale</span></li>
-                        <li>» Amass <span class="text-[#00f3ff]/50">// Enum</span></li>
                     </ul>
                 </div>
                 <div class="cyber-card p-6 border-t-[3px] border-[#ff003c]">
@@ -155,9 +154,7 @@
                     <ul class="text-xs text-gray-500 mono space-y-2 hover:text-gray-300 transition">
                         <li>» Metasploit <span class="text-[#ff003c]/50">// C2</span></li>
                         <li>» SQLmap <span class="text-[#ff003c]/50">// Injection</span></li>
-                        <li>» Netcat <span class="text-[#ff003c]/50">// IO</span></li>
                         <li>» Hydra <span class="text-[#ff003c]/50">// Brute</span></li>
-                        <li>» Searchsploit <span class="text-[#ff003c]/50">// DB</span></li>
                     </ul>
                 </div>
                 <div class="cyber-card p-6 border-t-[3px] border-[#00FF41]">
@@ -166,8 +163,6 @@
                         <li>» BloodHound <span class="text-[#00FF41]/50">// Graph</span></li>
                         <li>» Mimikatz <span class="text-[#00FF41]/50">// Creds</span></li>
                         <li>» Impacket <span class="text-[#00FF41]/50">// RPC</span></li>
-                        <li>» Responder <span class="text-[#00FF41]/50">// Poison</span></li>
-                        <li>» CrackMapExec <span class="text-[#00FF41]/50">// Spray</span></li>
                     </ul>
                 </div>
                 <div class="cyber-card p-6 border-t-[3px] border-[#a855f7]">
@@ -176,25 +171,22 @@
                         <li>» Cobalt Strike <span class="text-[#a855f7]/50">// Red Team Ops</span></li>
                         <li>» Sliver <span class="text-[#a855f7]/50">// Open Source C2</span></li>
                         <li>» Havoc <span class="text-[#a855f7]/50">// EDR Evasion</span></li>
-                        <li>» Empire <span class="text-[#a855f7]/50">// PowerShell C2</span></li>
                     </ul>
                 </div>
-
                 <div class="cyber-card p-6 border-t-[3px] border-[#fbbf24]">
                     <h4 class="text-[#fbbf24] mono mb-3 text-sm font-bold glow-yellow">05 // PRIV ESCALATION</h4>
                     <ul class="text-xs text-gray-500 mono space-y-2 hover:text-gray-300 transition">
                         <li>» LinPEAS <span class="text-[#fbbf24]/50">// Linux Enum</span></li>
                         <li>» WinPEAS <span class="text-[#fbbf24]/50">// Windows Enum</span></li>
-                        <li>» PowerUp <span class="text-[#fbbf24]/50">// Windows Vectors</span></li>
                         <li>» GTFOBins <span class="text-[#fbbf24]/50">// Binary Abuse</span></li>
                     </ul>
                 </div>
-
                 <div class="cyber-card p-6 border-t-[3px] border-white">
                     <h4 class="text-white mono mb-3 text-sm font-bold glow-white">06 // VULN ANALYSIS</h4>
                     <ul class="text-xs text-gray-500 mono space-y-2 hover:text-gray-300 transition">
                         <li>» Nessus <span class="text-white/50">// Infra Assessment</span></li>
                         <li>» Nuclei <span class="text-white/50">// Template Scanning</span></li>
+                        <li>» Nikto <span class="text-white/50">// Web Server</span></li>
                     </ul>
                 </div>
             </div>
@@ -227,6 +219,121 @@
             </div>
         </section>
 
+        <section id="contact" class="mb-40 relative z-10 border-t border-white/5 pt-20">
+            <div class="flex items-center gap-4 mb-16">
+                <div class="h-px bg-[#ff003c] w-12"></div>
+                <h2 class="text-3xl font-black text-white tracking-tighter cyber-font">
+                    <span class="text-[#00f3ff]">SECURE</span>_UPLINK
+                </h2>
+                <div class="h-px bg-gray-800 flex-grow"></div>
+                <div class="text-[#ff003c] text-xs mono animate-pulse">ENCRYPTION: ENABLED</div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                <div class="order-2 lg:order-1 space-y-8">
+                    <div
+                        class="bg-[#050505] border border-gray-800 p-6 relative overflow-hidden group hover:border-[#00f3ff] transition-colors duration-500">
+                        <div
+                            class="absolute inset-0 bg-[#00f3ff]/5 opacity-0 group-hover:opacity-100 transition-opacity">
+                        </div>
+
+                        <h3 class="text-[#00f3ff] font-bold mono text-sm mb-4 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-[#00f3ff]"></span>
+                            PUBLIC_KEY_BLOCK
+                        </h3>
+
+                        <div class="mono text-[10px] text-gray-500 leading-relaxed overflow-hidden h-32 relative">
+                            -----BEGIN PGP PUBLIC KEY BLOCK-----<br>
+                            Version: OpenPGP.js v4.10.10<br>
+                            Comment: https://shadowborne.studio<br>
+                            <br>
+                            xsBNBF/yl4UBCAC9Rj7... [DATA_CLIPPED] ...<br>
+                            mQENBF/yl4UBCAC9Rj7... [DATA_CLIPPED] ...<br>
+                            w0L6+... <span class="text-[#ff003c]">Do not trust untampered keys.</span><br>
+                            -----END PGP PUBLIC KEY BLOCK-----
+
+                            <div
+                                class="absolute inset-0 bg-gradient-to-b from-transparent via-[#00f3ff]/5 to-transparent h-[50%] animate-[scanline_3s_linear_infinite] pointer-events-none">
+                            </div>
+                        </div>
+
+                        <button onclick="copyPGP()"
+                            class="relative z-20 mt-4 w-full border border-gray-700 hover:border-[#00f3ff] text-gray-400 hover:text-white text-xs mono py-2 transition-all flex justify-center items-center gap-2 group-hover:bg-[#00f3ff]/5 cursor-pointer">
+                            <span id="pgp-btn-text">COPY_KEY_TO_CLIPBOARD</span>
+                        </button>
+                    </div>
+
+                    <div class="font-mono text-xs space-y-2 p-4 border-l-2 border-[#ff003c] bg-black/50">
+                        <div class="text-gray-500">root@shadowborne:~$ <span
+                                class="text-white">./init_handshake.sh</span></div>
+                        <div class="text-[#00f3ff]">[SUCCESS] Port 443 Open</div>
+                        <div class="text-gray-500">[SYSTEM] Establishing secure tunnel...</div>
+                        <div class="text-gray-500">[SYSTEM] Awaiting user payload...</div>
+                        <div class="text-[#ff003c] animate-pulse">_</div>
+                    </div>
+                </div>
+
+                <div class="order-1 lg:order-2">
+                    <form action="https://formspree.io/f/xvzgjvnj" method="POST" class="space-y-8">
+
+                        <div class="relative group">
+                            <input type="text" name="codename" required
+                                class="w-full bg-transparent border-b border-gray-800 text-white mono text-sm py-3 px-2 focus:outline-none focus:border-[#00f3ff] transition-colors peer placeholder-transparent"
+                                placeholder="CODENAME">
+                            <label
+                                class="absolute left-2 -top-5 text-xs text-gray-500 mono transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:-top-5 peer-focus:text-[#00f3ff]">
+                                > IDENTIFIER / CODENAME
+                            </label>
+                            <div
+                                class="absolute bottom-0 left-0 h-[1px] w-0 bg-[#00f3ff] transition-all duration-300 peer-focus:w-full">
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <input type="email" name="_replyto" required
+                                class="w-full bg-transparent border-b border-gray-800 text-white mono text-sm py-3 px-2 focus:outline-none focus:border-[#00f3ff] transition-colors peer placeholder-transparent"
+                                placeholder="EMAIL">
+                            <label
+                                class="absolute left-2 -top-5 text-xs text-gray-500 mono transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:-top-5 peer-focus:text-[#00f3ff]">
+                                > RETURN_ADDRESS (EMAIL)
+                            </label>
+                            <div
+                                class="absolute bottom-0 left-0 h-[1px] w-0 bg-[#00f3ff] transition-all duration-300 peer-focus:w-full">
+                            </div>
+                        </div>
+
+                        <div class="relative group">
+                            <textarea name="message" rows="4" required
+                                class="w-full bg-transparent border-b border-gray-800 text-white mono text-sm py-3 px-2 focus:outline-none focus:border-[#ff003c] transition-colors peer placeholder-transparent"
+                                placeholder="PAYLOAD"></textarea>
+                            <label
+                                class="absolute left-2 -top-5 text-xs text-gray-500 mono transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:top-3 peer-focus:-top-5 peer-focus:text-[#ff003c]">
+                                > TRANSMISSION_PAYLOAD
+                            </label>
+                            <div
+                                class="absolute bottom-0 left-0 h-[1px] w-0 bg-[#ff003c] transition-all duration-300 peer-focus:w-full">
+                            </div>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full bg-[#ff003c]/10 border border-[#ff003c]/50 text-[#ff003c] font-bold mono py-4 hover:bg-[#ff003c] hover:text-white transition-all duration-300 flex justify-center items-center gap-3 group relative overflow-hidden">
+                            <span class="relative z-10">INITIALIZE_UPLINK</span>
+                            <svg class="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <div
+                                class="absolute inset-0 bg-[#ff003c] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0">
+                            </div>
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="border-t border-white/5 py-12 text-center bg-black relative z-10">
@@ -245,7 +352,6 @@
             <div class="p-4 bg-black/50">
                 <img src="assets/Warning.jpg" alt="Secret Payload"
                     class="w-full h-auto border border-gray-800 mb-4 block">
-
                 <div class="flex gap-2">
                     <a href="assets/Warning.jpg" download="Warning_Payload.jpg"
                         class="flex-1 bg-[#00FF41] text-black text-center py-2 mono text-xs font-bold hover:bg-white transition">DOWNLOAD
@@ -256,7 +362,7 @@
             </div>
         </div>
     </div>
-
+    <script src="pgp.js"></script>
     <script src="terminal.js"></script>
 </body>
 
