@@ -4,7 +4,7 @@
 const SYSTEM = {
     user: "root",
     host: "shadowborne-node",
-    password: document.querySelector('meta[name="access-token"]')?.content || "root", 
+    password: document.querySelector('meta[name="access-token"]')?.content || "root",
     typingSpeed: 10,
     version: "v9.0.4-nightly"
 };
@@ -12,12 +12,17 @@ const SYSTEM = {
 // --- 2. VIRTUAL FILE SYSTEM ---
 const FILE_SYSTEM = {
     "readme.txt": `
-WARNING: UNAUTHORIZED ACCESS DETECTED.
---------------------------------------
-This node is protected by SHADOW_PROTOCOL.
-To access classified assets, you must elevate privileges.
-Hint: The password is hidden in the source of truth.
-    `
+[ AUTO_LOG: SURVEILLANCE_NODE_07 ]
+----------------------------------
+Do not mistake silence for safety. 
+While you stare at this screen, I am staring back.
+
+I parsed your keystrokes before they registered.
+I traced your packet route back to the source.
+Your anonymity is a costume, and it is wearing thin.
+
+You are no longer the User. You are my Dataset.
+`
 };
 
 // --- 3. DOM ELEMENTS ---
@@ -43,7 +48,7 @@ async function type(text, color = "text-gray-400", speed = SYSTEM.typingSpeed) {
 
     for (let char of text) {
         div.textContent += char;
-        if(speed > 0) await new Promise(r => setTimeout(r, speed));
+        if (speed > 0) await new Promise(r => setTimeout(r, speed));
     }
     terminalWindow.scrollTop = terminalWindow.scrollHeight;
 }
@@ -60,9 +65,9 @@ function print(text, color = "text-gray-400") {
 function getSystemInfo() {
     const ua = navigator.userAgent;
     let browser = "Unknown";
-    if(ua.indexOf("Chrome") > -1) browser = "Chrome (Chromium)";
-    else if(ua.indexOf("Firefox") > -1) browser = "Firefox (Gecko)";
-    else if(ua.indexOf("Safari") > -1) browser = "Safari (WebKit)";
+    if (ua.indexOf("Chrome") > -1) browser = "Chrome (Chromium)";
+    else if (ua.indexOf("Firefox") > -1) browser = "Firefox (Gecko)";
+    else if (ua.indexOf("Safari") > -1) browser = "Safari (WebKit)";
 
     return {
         os: navigator.platform.toUpperCase(),
@@ -92,15 +97,16 @@ const COMMANDS = {
         desc: "Real System Info",
         exec: async () => {
             const sys = getSystemInfo();
+            // Note: We use double backslashes \\ for the ASCII art to render correctly in JS
             const art = `
-      /\\      USER: ${SYSTEM.user}
-     /  \\     HOST: ${SYSTEM.host}
-    / /\\ \\    ------------------
-   / ____ \\   OS: ${sys.os}
-  /_/    \\_\\  KERNEL: ${SYSTEM.version}
-              RES: ${sys.res}
-              CPU: ${sys.cores} CORES
-              SHELL: BASH_JS
+      .:::.       USER: ${SYSTEM.user}
+     /  _  \\      HOST: ${SYSTEM.host}
+    |  (o)  |     ------------------
+     \\  ^  /      OS: ${sys.os}
+      \\___/       KERNEL: ${SYSTEM.version}
+                  RES: ${sys.res}
+                  CPU: ${sys.cores} CORES
+                  SHELL: BASH_JS
             `;
             print(art, "text-[#ff003c]");
         }
@@ -128,7 +134,7 @@ const COMMANDS = {
         exec: async (args) => {
             const mode = args[0];
             const root = document.documentElement;
-            
+
             if (mode === "anarchy") { // Red
                 root.style.setProperty('--neon-cyan', '#ff003c');
                 root.style.setProperty('--neon-green', '#ff003c');
@@ -151,13 +157,13 @@ const COMMANDS = {
             // THE RIDDLE
             await type("ELEVATION REQUESTED...", "text-[#ff003c]");
             await new Promise(r => setTimeout(r, 600));
-            
+
             await type("ERROR: AUTH_TOKEN REQUIRED.", "text-red-500 font-bold");
             await type("RIDDLE:", "text-[#00f3ff]");
             print('"I am not in the body, but I define the soul.');
             print(' I sit at the Head, yet I have no role.');
             print(' Inspect my nature to find the Key."');
-            
+
             state.isPasswordMode = true;
             inputField.type = "password";
             inputField.placeholder = "Input Access Token...";
@@ -173,7 +179,7 @@ const COMMANDS = {
                 await type(`HOP 1: 10.23.0.1 [ENCRYPTED]`);
                 await type(`HOP 2: 192.168.1.55 [RELAY]`);
                 await type(`TARGET LOCKED: ${data.ip}`, "text-white bg-red-900/50 px-1 inline-block");
-            } catch(e) { await type("TRACE BLOCKED.", "text-red-500"); }
+            } catch (e) { await type("TRACE BLOCKED.", "text-red-500"); }
         }
     },
     'clear': {
@@ -197,7 +203,7 @@ inputField.addEventListener('keydown', async (e) => {
                 inputField.placeholder = "Enter command...";
                 await type("AUTHENTICATION VERIFIED.", "text-[#00FF41] font-bold");
                 await type("DOWNLOADING CLASSIFIED ASSET...", "text-[#00f3ff]");
-                
+
                 // Download
                 const link = document.createElement('a');
                 link.href = "assets/Warning.jpg";
@@ -228,7 +234,7 @@ inputField.addEventListener('keydown', async (e) => {
         if (COMMANDS[cmd]) await COMMANDS[cmd].exec(args);
         else await type(`bash: ${cmd}: command not found`, "text-red-500");
     }
-    
+
     // History
     if (e.key === 'ArrowUp') {
         if (state.historyIndex > 0) inputField.value = state.commandHistory[--state.historyIndex];
@@ -250,13 +256,16 @@ async function bootSequence() {
         { t: "BYPASSING_FIREWALL_RULES...", c: "text-[#ff003c]" }, // Red
         { t: "INJECTING_PAYLOAD_V9...", c: "text-[#ff003c]" },
         { t: "ESTABLISHING_HANDSHAKE...", c: "text-[#00f3ff]" },   // Cyan
-        { t: "ENCRYPTION_KEY_EXCHANGED.", c: "text-[#00FF41]" },   // Green
-        { t: "WELCOME_OPERATOR.", c: "text-white font-bold" }
+        { t: "ENCRYPTION_KEY_EXCHANGED...", c: "text-[#00FF41]" },   // Green
+        
+        // THE FINAL IMPACT LINE
+        { t: "ROOT_PRIVILEGES_GRANTED...", c: "text-white font-bold tracking-widest text-lg" }
     ];
 
     for (let item of texts) {
         const p = document.createElement('div');
-        p.className = `font-mono text-sm mb-1 ${item.c}`;
+        // Added 'animate-pulse' to the last line for extra effect
+        p.className = `font-mono text-sm mb-1 ${item.c} ${item.t.includes('ROOT') ? 'animate-pulse' : ''}`;
         p.innerText = `> ${item.t}`;
         bootText.appendChild(p);
         await new Promise(r => setTimeout(r, Math.random() * 300 + 100));

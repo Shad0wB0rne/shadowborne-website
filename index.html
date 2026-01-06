@@ -21,7 +21,6 @@
         <div class="animate-pulse text-green-500 font-mono text-sm mt-2">_</div>
     </div>
     <div class="vignette"></div>
-    <div id="custom-cursor"></div>
     <div class="crt-overlay"></div>
     <div class="noise-layer"></div>
     <div class="cyber-grid"></div>
@@ -38,8 +37,8 @@
             <div class="hidden md:flex space-x-10 mono text-[10px] uppercase tracking-[0.2em]">
                 <a href="#profile" class="nav-link hover:text-[#00f3ff] transition">Identity</a>
                 <a href="#toolbox" class="nav-link hover:text-[#ff003c] transition">Arsenal</a>
-                <a href="#contact" class="nav-link hover:text-[#fbbf24] transition">Uplink</a>
                 <a href="#console" class="nav-link hover:text-[#00FF41] transition">Terminal</a>
+                <a href="#contact" class="nav-link hover:text-[#fbbf24] transition">Uplink</a>
             </div>
         </div>
     </nav>
@@ -321,7 +320,7 @@
                         ROOT@SHADOWBORNE-NODE:~ (TOR_V3)
                     </div>
                 </div>
-                <div class="mono text-[10px] text-[#333]">UPTIME: <span id="uptime-counter">00:00:00</span></div>
+                <div class="mono text-[10px] text-[#333]">UPTIME: <span id="uptime-counter">99.9999%</span></div>
             </div>
 
             <div id="terminal-window" 
@@ -494,32 +493,92 @@
 
     </main>
 
-    <footer class="border-t border-white/5 py-12 text-center bg-black relative z-10">
-        <div class="mono text-[10px] text-gray-600 mb-2">SHADOWBORNE // DARKWEB NODE</div>
-        <div class="mono text-[10px] text-gray-700">ENCRYPTED CONNECTION ESTABLISHED</div>
-    </footer>
+    <footer class="border-t border-[#ff003c]/20 bg-[#020202] relative z-10 pt-16 pb-8 overflow-hidden">
+    
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(20,20,20,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.5)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
 
-    <div id="warning-modal"
-        class="fixed inset-0 z-[9999] bg-black/95 hidden flex items-center justify-center backdrop-blur-sm p-4">
-        <div
-            class="relative max-w-md w-full border border-[#00FF41] bg-black shadow-[0_0_50px_rgba(0,255,65,0.2)] animate-bounce-in flex flex-col">
-            <div class="bg-[#00FF41]/10 p-2 border-b border-[#00FF41] flex justify-between items-center">
-                <span class="text-[#00FF41] mono text-xs tracking-widest">CLASSIFIED_ASSET</span>
-                <span class="text-[#00FF41] mono text-xs animate-pulse">● LIVE</span>
+    <div class="container-wide px-6 relative z-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            
+            <div class="md:col-span-1 space-y-4">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-2 h-2 bg-[#ff003c] animate-pulse"></div>
+                    <span class="cyber-font text-white tracking-widest text-sm font-bold">SHADOW_BORNE</span>
+                </div>
+                <p class="mono text-[10px] text-gray-500 leading-relaxed">
+                    A digital anomaly operating in the null space between signal and noise. 
+                    <br><br>
+                    <span class="text-[#ff003c]">> SYSTEM_STATUS:</span> COMPROMISED
+                    <br>
+                    <span class="text-[#00f3ff]">> NODE_LOCATION:</span> [REDACTED]
+                </p>
             </div>
-            <div class="p-4 bg-black/50">
-                <img src="assets/Warning.jpg" alt="Secret Payload"
-                    class="w-full h-auto border border-gray-800 mb-4 block">
-                <div class="flex gap-2">
-                    <a href="assets/Warning.jpg" download="Warning_Payload.jpg"
-                        class="flex-1 bg-[#00FF41] text-black text-center py-2 mono text-xs font-bold hover:bg-white transition">DOWNLOAD
-                        ARTIFACT</a>
-                    <button onclick="document.getElementById('warning-modal').classList.add('hidden')"
-                        class="flex-1 border border-red-500 text-red-500 text-center py-2 mono text-xs font-bold hover:bg-red-500 hover:text-black transition">CLOSE</button>
+
+            <div class="md:col-span-1 space-y-2">
+                <h4 class="mono text-xs text-white font-bold mb-4 border-b border-gray-800 pb-2 inline-block">NETWORK_TELEMETRY</h4>
+                <div class="grid grid-cols-2 gap-y-2 mono text-[10px]">
+                    <div class="text-gray-600">UPTIME:</div>
+                    <div class="text-[#00FF41]">99.9999%</div>
+                    
+                    <div class="text-gray-600">LATENCY:</div>
+                    <div class="text-[#00f3ff]">~12ms</div>
+                    
+                    <div class="text-gray-600">PROTOCOL:</div>
+                    <div class="text-gray-400">TOR_V3_HIDDEN</div>
+                    
+                    <div class="text-gray-600">ENCRYPTION:</div>
+                    <div class="text-gray-400">AES-256-GCM</div>
+
+                    <div class="text-gray-600">PACKETS:</div>
+                    <div class="text-[#ff003c] animate-pulse">TRACING...</div>
+                </div>
+            </div>
+
+            <div class="md:col-span-1">
+                <h4 class="mono text-xs text-white font-bold mb-4 border-b border-gray-800 pb-2 inline-block">DIRECT_ACCESS</h4>
+                <ul class="space-y-2 mono text-[10px]">
+                    <li><a href="#profile" class="text-gray-500 hover:text-[#00f3ff] hover:pl-2 transition-all duration-300 group">
+                        <span class="text-[#00f3ff] opacity-0 group-hover:opacity-100 transition-opacity">></span> IDENTITY_MATRIX
+                    </a></li>
+                    <li><a href="#toolbox" class="text-gray-500 hover:text-[#ff003c] hover:pl-2 transition-all duration-300 group">
+                        <span class="text-[#ff003c] opacity-0 group-hover:opacity-100 transition-opacity">></span> WEAPON_ARSENAL
+                    </a></li>
+                    <li><a href="#console" class="text-gray-500 hover:text-[#00FF41] hover:pl-2 transition-all duration-300 group">
+                        <span class="text-[#00FF41] opacity-0 group-hover:opacity-100 transition-opacity">></span> ROOT_TERMINAL
+                    </a></li>
+                    <li><a href="#contact" class="text-gray-500 hover:text-[#fbbf24] hover:pl-2 transition-all duration-300 group">
+                        <span class="text-[#fbbf24] opacity-0 group-hover:opacity-100 transition-opacity">></span> SECURE_UPLINK
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="md:col-span-1">
+                <h4 class="mono text-xs text-white font-bold mb-4 border-b border-gray-800 pb-2 inline-block">PGP_FINGERPRINT</h4>
+                <div class="bg-black/50 border border-gray-800 p-2 font-mono text-[9px] text-gray-500 break-all leading-tight hover:border-[#00f3ff] hover:text-[#00f3ff] transition-colors cursor-help" title="Verify Integrity">
+                    89A2 34F1 90B2 78C3 12D4 <br>
+                    56E5 90F6 12A7 34B8 56C9 <br>
+                    <span class="text-[#00f3ff] mt-2 block">[VERIFIED_SIGNATURE]</span>
+                </div>
+                <div class="mt-4 text-[9px] text-gray-600">
+                    Warning: Unencrypted comms will be intercepted by surveillance nodes.
                 </div>
             </div>
         </div>
+
+        <div class="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="mono text-[10px] text-gray-600">
+                &copy; <span class="text-gray-400">2077 SHADOW_CORP</span> // NO_RIGHTS_RESERVED
+            </div>
+            
+            <div class="flex gap-4 mono text-[10px] text-gray-700 uppercase tracking-widest">
+                <span class="hover:text-[#ff003c] cursor-pointer transition-colors">Privacy_Void</span>
+                <span class="hover:text-[#00f3ff] cursor-pointer transition-colors">Term_Zero</span>
+                <span class="hover:text-[#00FF41] cursor-pointer transition-colors">Init_Logout</span>
+            </div>
+        </div>
     </div>
+</footer>
+
     <script src="pgp.js"></script>
     <script src="terminal.js"></script>
     <script src="bg.js"></script>

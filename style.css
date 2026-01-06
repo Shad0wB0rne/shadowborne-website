@@ -217,27 +217,24 @@ button:active {
     z-index: 45; /* Below CRT, above text */
 }
 
-/* 2. CUSTOM CURSOR */
-body {
-    cursor: none; /* Hide default cursor */
+/* --- CURSOR SETTINGS --- */
+html, body {
+    cursor: crosshair; /* Forces the + cursor */
 }
 
-#custom-cursor {
-    position: fixed;
-    top: 0; left: 0;
-    width: 20px; height: 20px;
-    border: 1px solid var(--neon-cyan);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s, height 0.2s, background 0.2s;
-    mix-blend-mode: difference;
+/* Optional: If you want the crosshair even over links/buttons */
+a, button, input, .cursor-pointer {
+    cursor: crosshair !important;
 }
 
-/* Cursor reacts to clicking */
-body:active #custom-cursor {
-    width: 10px; height: 10px;
-    background: var(--neon-pink);
-    border-color: var(--neon-pink);
+/* --- HIDE TERMINAL SCROLLBAR --- */
+
+/* Target the specific terminal ID */
+#terminal-window {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#terminal-window::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
 }
