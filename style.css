@@ -1,101 +1,143 @@
-/* --- CORE STABILIZATION & SCROLLBAR HIDING --- */
-html {
-    overflow-y: scroll;       /* Prevent screen jerk on load */
-    overflow-x: hidden;       /* Prevent horizontal scroll */
-    scroll-behavior: smooth;  /* Enable smooth anchor jumping */
-    
-    /* Hide Scrollbar (Firefox/IE/Edge) */
-    scrollbar-width: none; 
-    -ms-overflow-style: none;
-}
+/* =========================================
+   SHADOWBORNE // CORE STYLESHEET V2.0
+   THEME: HEAVY CYBERPUNK / DARKWEB NODE
+   ========================================= */
 
-/* Hide Scrollbar (Chrome/Safari/Opera) */
-html::-webkit-scrollbar {
-    display: none;
-}
-
-body {
-    overflow-x: hidden;
-    background-color: #050505; 
-}
-
-/* Fix Overlay Positioning */
-.crt-overlay, .noise-layer, .cyber-grid {
-    position: fixed;
-    pointer-events: none;
-    z-index: 0;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-}
-
-/* style.css */
+/* --- 0. VARIABLES & RESET --- */
 :root {
     --neon-green: #00FF41;
     --neon-cyan: #00f3ff;
     --neon-pink: #ff003c;
-    --dark-bg: #030303;
+    --neon-purple: #bc13fe;
+    --dark-bg: #050505;
+    --glass-black: rgba(10, 10, 10, 0.8);
+    --grid-color: rgba(0, 243, 255, 0.1);
 }
+
+* {
+    box-sizing: border-box;
+    cursor: crosshair; /* Global Crosshair Cursor */
+}
+
+/* Custom Text Selection (Hacker Style) */
+::selection {
+    background: var(--neon-pink);
+    color: #000;
+    text-shadow: none;
+}
+
+/* --- 1. CORE LAYOUT & SCROLLBAR --- */
+html {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE */
+}
+html::-webkit-scrollbar { display: none; } /* Chrome */
 
 body {
     background-color: var(--dark-bg);
     color: #e0e0e0;
-    font-family: 'Inter', sans-serif;
-    /* Static Noise in background */
-    background-image: radial-gradient(#111 1px, transparent 1px);
-    background-size: 30px 30px;
+    font-family: 'Rajdhani', sans-serif; /* Tech feel */
+    overflow-x: hidden;
+    margin: 0;
+    line-height: 1.6;
 }
 
+/* Typography Utils */
 .mono { font-family: 'Fira Code', monospace; }
-.cyber-font { font-family: 'Orbitron', sans-serif; }
+.cyber-font { font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
 
-/* 3D Cyber Grid Floor */
+/* --- 2. BACKGROUND & ATMOSPHERE --- */
+
+/* The Canvas stays fixed behind everything */
+#cyber-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 0;
+    opacity: 0.6; /* Balanced visibility */
+}
+
+/* 3D Cyber Grid Floor (Moving) */
 .cyber-grid {
     position: fixed;
-    bottom: 0; left: 0; width: 100%; height: 40vh;
+    bottom: 0; left: 0; width: 100%; height: 35vh;
     background: 
-        linear-gradient(transparent 50%, rgba(0, 243, 255, 0.05) 50%),
-        linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 243, 255, 0.05), rgba(0, 0, 0, 0));
-    background-size: 100% 10px, 100px 100%;
-    transform: perspective(500px) rotateX(60deg);
-    z-index: 0;
+        linear-gradient(transparent 50%, var(--grid-color) 50%),
+        linear-gradient(90deg, rgba(0,0,0,0), var(--grid-color), rgba(0,0,0,0));
+    background-size: 100% 20px, 100px 100%;
+    transform: perspective(500px) rotateX(60deg) scale(1.5);
+    z-index: 1; /* Above canvas, below content */
     pointer-events: none;
     animation: gridMove 20s linear infinite;
+    mask-image: linear-gradient(to bottom, transparent, black); /* Fade out top */
 }
-
 @keyframes gridMove {
     0% { background-position: 0 0; }
     100% { background-position: 0 100px; }
 }
 
-/* Glow Utils */
-.glow-cyan { text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
-.glow-pink { text-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
-.glow-green { text-shadow: 0 0 15px rgba(0, 255, 65, 0.5); }
-.glow-purple { text-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
-.glow-yellow { text-shadow: 0 0 15px rgba(251, 191, 36, 0.5); }
-.glow-white  { text-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
-
-
-/* Noise Texture */
+/* Noise Texture (Static Grain) */
 .noise-layer {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzAwMCIgLz48ZmlsdGVyIGlkPSJnoiPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjY1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIwLjAzIiBmaWxsZXQ9InVybCgjZykiIC8+PC9zdmc+');
-    opacity: 0.04; pointer-events: none; z-index: 40;
+    opacity: 0.05; 
+    pointer-events: none; 
+    z-index: 40;
 }
 
-/* Glitch Text */
-.glitch-text { position: relative; }
+/* CRT Scanline (The moving bar) */
+.crt-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+    background-size: 100% 3px, 3px 100%;
+    pointer-events: none; 
+    z-index: 50;
+}
+.crt-overlay::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    animation: scanline 8s linear infinite;
+    opacity: 0.15;
+}
+@keyframes scanline {
+    0% { transform: translateY(-100vh); }
+    100% { transform: translateY(100vh); }
+}
+
+/* --- 3. COMPONENTS & UTILS --- */
+
+/* Utility: Text Glows */
+.glow-cyan   { text-shadow: 0 0 10px rgba(0, 243, 255, 0.7); }
+.glow-pink   { text-shadow: 0 0 10px rgba(255, 0, 60, 0.7); }
+.glow-green  { text-shadow: 0 0 10px rgba(0, 255, 65, 0.7); }
+.text-cyan   { color: var(--neon-cyan); }
+.text-pink   { color: var(--neon-pink); }
+
+/* Glitch Text Effect */
+.glitch-text { position: relative; display: inline-block; }
 .glitch-text::before, .glitch-text::after {
-    content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-bg);
+    content: attr(data-text); 
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+    background: var(--dark-bg);
 }
 .glitch-text::before {
-    left: 2px; text-shadow: -1px 0 #ff003c; clip: rect(24px, 550px, 90px, 0);
+    left: 2px; text-shadow: -1px 0 var(--neon-pink); 
+    clip: rect(24px, 550px, 90px, 0);
     animation: glitch-anim 3s infinite linear alternate-reverse;
 }
 .glitch-text::after {
-    left: -2px; text-shadow: -1px 0 #00f3ff; clip: rect(85px, 550px, 140px, 0);
+    left: -2px; text-shadow: -1px 0 var(--neon-cyan); 
+    clip: rect(85px, 550px, 140px, 0);
     animation: glitch-anim 2s infinite linear alternate-reverse;
 }
 @keyframes glitch-anim {
@@ -104,32 +146,98 @@ body {
     100% { clip: rect(30px, 9999px, 5px, 0); }
 }
 
-/* Cyber Cards */
+/* CYBER CARD (Glass + Hover Effects) */
 .cyber-card {
-    background: rgba(10, 10, 10, 0.7);
+    /* Fallback color if not specified in HTML */
+    --glow-color: #00f3ff; 
+    
+    background: rgba(5, 5, 5, 0.6);
     border: 1px solid #1a1a1a;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(5px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
 }
+
+/* The sliding line effect at the top */
+.cyber-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; width: 100%; height: 2px;
+    /* Updated to use dynamic glow color */
+    background: linear-gradient(90deg, transparent, var(--glow-color), transparent);
+    transition: 0.5s;
+}
+
+.cyber-card:hover::before {
+    left: 100%;
+}
+
 .cyber-card:hover {
     background: #000;
-    box-shadow: 0 0 25px rgba(0, 243, 255, 0.1);
+    /* Updated to use dynamic glow color */
+    border-color: var(--glow-color);
+    box-shadow: 0 0 30px var(--glow-color);
     transform: translateY(-5px);
 }
 
-/* CRT Overlay */
-.crt-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    background-size: 100% 2px, 3px 100%;
-    pointer-events: none; z-index: 50;
+/* TERMINAL INPUTS (Forms) */
+input, textarea {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #333 !important;
+    color: var(--neon-cyan) !important;
+    font-family: 'Fira Code', monospace;
+    transition: 0.3s;
+}
+input:focus, textarea:focus {
+    outline: none;
+    border-bottom: 1px solid var(--neon-pink) !important;
+    box-shadow: 0 10px 20px -10px rgba(255, 0, 60, 0.1);
 }
 
-.container-wide { max-width: 1600px; margin: 0 auto; }
-
-@keyframes bounceIn {
-    0% { transform: scale(0.9); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+/* BUTTONS */
+button {
+    position: relative;
+    overflow: hidden;
 }
-.animate-bounce-in { animation: bounceIn 0.3s ease-out; }
+button:active {
+    transform: scale(0.98);
+}
+
+/* --- GOD MODE UPGRADES --- */
+
+/* 1. VIGNETTE (Old Monitor Dark Corners) */
+.vignette {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    box-shadow: 0 0 150px rgba(0,0,0,0.9) inset;
+    pointer-events: none;
+    z-index: 45; /* Below CRT, above text */
+}
+
+/* 2. CUSTOM CURSOR */
+body {
+    cursor: none; /* Hide default cursor */
+}
+
+#custom-cursor {
+    position: fixed;
+    top: 0; left: 0;
+    width: 20px; height: 20px;
+    border: 1px solid var(--neon-cyan);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: difference;
+}
+
+/* Cursor reacts to clicking */
+body:active #custom-cursor {
+    width: 10px; height: 10px;
+    background: var(--neon-pink);
+    border-color: var(--neon-pink);
+}

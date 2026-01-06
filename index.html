@@ -15,10 +15,17 @@
 </head>
 
 <body class="antialiased text-gray-300 overflow-x-hidden selection:bg-[#ff003c] selection:text-white bg-[#050505]">
-
+    <div id="boot-screen"
+        class="fixed inset-0 bg-black z-[100] p-10 overflow-hidden flex flex-col justify-end transition-opacity duration-1000">
+        <div id="boot-text" class="max-w-2xl"></div>
+        <div class="animate-pulse text-green-500 font-mono text-sm mt-2">_</div>
+    </div>
+    <div class="vignette"></div>
+    <div id="custom-cursor"></div>
     <div class="crt-overlay"></div>
     <div class="noise-layer"></div>
     <div class="cyber-grid"></div>
+    <canvas id="cyber-canvas" class="fixed inset-0 z-0 pointer-events-none opacity-40"></canvas>
 
     <nav class="fixed w-full z-50 px-6 py-4 bg-[#030303]/80 backdrop-blur-md border-b border-[#00f3ff]/10">
         <div class="max-w-[1800px] mx-auto flex justify-between items-center">
@@ -53,7 +60,10 @@
                 <h1
                     class="text-6xl md:text-8xl font-black text-white leading-[0.85] mb-8 tracking-tighter cyber-font drop-shadow-2xl">
                     I AM <br />
-                    <span class="glitch-text text-[#00f3ff]" data-text="SHADOWBORNE.">SHADOWBORNE.</span>
+                    <span class="glitch-text text-[#00f3ff] hyper-text" data-text="SHADOWBORNE."
+                        data-value="SHADOWBORNE.">
+                        SHADOWBORNE.
+                    </span>
                 </h1>
 
                 <p
@@ -138,86 +148,234 @@
             </div>
         </section>
 
-        <section id="toolbox" class="mb-40 relative z-10">
-            <h2 class="mono text-[#555] text-xs mb-12 tracking-[0.5em] uppercase text-center">Weapons_Grade_Arsenal</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-                <div class="cyber-card p-6 border-t-[3px] border-[#00f3ff]">
-                    <h4 class="text-[#00f3ff] mono mb-3 text-sm font-bold glow-cyan">01 // RECONNAISSANCE</h4>
-                    <ul class="text-xs text-gray-500 mono space-y-2 hover:text-gray-300 transition">
-                        <li>» Nmap <span class="text-[#00f3ff]/50">// Discovery</span></li>
-                        <li>» Burp Suite Pro <span class="text-[#00f3ff]/50">// Proxy</span></li>
-                        <li>» FFUF <span class="text-[#00f3ff]/50">// Fuzzing</span></li>
-                    </ul>
-                </div>
-                <div class="cyber-card p-6 border-t-[3px] border-[#ff003c]">
-                    <h4 class="text-[#ff003c] mono mb-3 text-sm font-bold glow-pink">02 // EXPLOITATION</h4>
-                    <ul class="text-xs text-gray-500 mono space-y-2 hover:text-gray-300 transition">
-                        <li>» Metasploit <span class="text-[#ff003c]/50">// C2</span></li>
-                        <li>» SQLmap <span class="text-[#ff003c]/50">// Injection</span></li>
-                        <li>» Hydra <span class="text-[#ff003c]/50">// Brute</span></li>
-                    </ul>
-                </div>
-                <div class="cyber-card p-6 border-t-[3px] border-[#00FF41]">
-                    <h4 class="text-[#00FF41] mono mb-3 text-sm font-bold glow-green">03 // ACTIVE DIRECTORY</h4>
-                    <ul class="text-xs text-gray-500 mono space-y-2 hover:text-gray-300 transition">
-                        <li>» BloodHound <span class="text-[#00FF41]/50">// Graph</span></li>
-                        <li>» Mimikatz <span class="text-[#00FF41]/50">// Creds</span></li>
-                        <li>» Impacket <span class="text-[#00FF41]/50">// RPC</span></li>
-                    </ul>
-                </div>
-                <div class="cyber-card p-6 border-t-[3px] border-[#a855f7]">
-                    <h4 class="text-[#a855f7] mono mb-3 text-sm font-bold glow-purple">04 // C2 INFRA</h4>
-                    <ul class="text-xs text-gray-500 mono space-y-2 hover:text-gray-300 transition">
-                        <li>» Cobalt Strike <span class="text-[#a855f7]/50">// Red Team Ops</span></li>
-                        <li>» Sliver <span class="text-[#a855f7]/50">// Open Source C2</span></li>
-                        <li>» Havoc <span class="text-[#a855f7]/50">// EDR Evasion</span></li>
-                    </ul>
-                </div>
-                <div class="cyber-card p-6 border-t-[3px] border-[#fbbf24]">
-                    <h4 class="text-[#fbbf24] mono mb-3 text-sm font-bold glow-yellow">05 // PRIV ESCALATION</h4>
-                    <ul class="text-xs text-gray-500 mono space-y-2 hover:text-gray-300 transition">
-                        <li>» LinPEAS <span class="text-[#fbbf24]/50">// Linux Enum</span></li>
-                        <li>» WinPEAS <span class="text-[#fbbf24]/50">// Windows Enum</span></li>
-                        <li>» GTFOBins <span class="text-[#fbbf24]/50">// Binary Abuse</span></li>
-                    </ul>
-                </div>
-                <div class="cyber-card p-6 border-t-[3px] border-white">
-                    <h4 class="text-white mono mb-3 text-sm font-bold glow-white">06 // VULN ANALYSIS</h4>
-                    <ul class="text-xs text-gray-500 mono space-y-2 hover:text-gray-300 transition">
-                        <li>» Nessus <span class="text-white/50">// Infra Assessment</span></li>
-                        <li>» Nuclei <span class="text-white/50">// Template Scanning</span></li>
-                        <li>» Nikto <span class="text-white/50">// Web Server</span></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+<section id="toolbox" class="mb-40 relative z-10">
+    <div class="flex items-center justify-center gap-4 mb-16">
+        <div class="h-px bg-gray-800 w-12"></div>
+        <h2 class="mono text-[#555] text-xs tracking-[0.5em] uppercase text-center hover:text-white transition-colors duration-500 cursor-default">
+            Weapons_Grade_Arsenal
+        </h2>
+        <div class="h-px bg-gray-800 w-12"></div>
+    </div>
 
-        <section id="console" class="mb-32 relative z-10">
-            <div class="max-w-4xl mx-auto">
-                <div
-                    class="bg-[#050505] border border-[#222] rounded-sm shadow-[0_0_30px_rgba(0,0,0,0.8)] relative overflow-hidden group">
-                    <div class="bg-[#0a0a0a] px-4 py-2 flex justify-between items-center border-b border-[#222]">
-                        <div class="mono text-[10px] text-gray-600">root@shadowborne-node:~ (Tor)</div>
-                        <div class="flex gap-2">
-                            <div class="w-2 h-2 rounded-full bg-[#ff003c] animate-pulse"></div>
-                            <div class="w-2 h-2 rounded-full bg-[#fbbf24] opacity-50"></div>
-                            <div class="w-2 h-2 rounded-full bg-[#00FF41] opacity-50"></div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="cyber-card p-6 border-t-[2px] border-[#00f3ff] group" style="--glow-color: #00f3ff;">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="text-[#00f3ff] mono text-sm font-bold glow-cyan group-hover:text-white transition-colors">
+                    01 // RECONNAISSANCE
+                </h4>
+                <div class="w-1.5 h-1.5 bg-[#00f3ff] rounded-full animate-pulse shadow-[0_0_5px_#00f3ff]"></div>
+            </div>
+            <div class="h-px w-full bg-[#00f3ff]/20 mb-4 group-hover:bg-[#00f3ff]/50 transition-colors"></div>
+            <ul class="text-xs text-gray-500 mono space-y-3">
+                <li class="group/item flex items-center gap-2 hover:text-[#00f3ff] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Nmap <span class="text-[#00f3ff]/30 group-hover/item:text-[#00f3ff]/70">// Discovery</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#00f3ff] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Burp Suite <span class="text-[#00f3ff]/30 group-hover/item:text-[#00f3ff]/70">// Proxy</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#00f3ff] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    FFUF <span class="text-[#00f3ff]/30 group-hover/item:text-[#00f3ff]/70">// Fuzzing</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-6 border-t-[2px] border-[#ff003c] group" style="--glow-color: #ff003c;">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="text-[#ff003c] mono text-sm font-bold glow-pink group-hover:text-white transition-colors">
+                    02 // EXPLOITATION
+                </h4>
+                <div class="w-1.5 h-1.5 bg-[#ff003c] rounded-full animate-pulse shadow-[0_0_5px_#ff003c]"></div>
+            </div>
+            <div class="h-px w-full bg-[#ff003c]/20 mb-4 group-hover:bg-[#ff003c]/50 transition-colors"></div>
+            <ul class="text-xs text-gray-500 mono space-y-3">
+                <li class="group/item flex items-center gap-2 hover:text-[#ff003c] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Metasploit <span class="text-[#ff003c]/30 group-hover/item:text-[#ff003c]/70">// C2_Framework</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#ff003c] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    SQLmap <span class="text-[#ff003c]/30 group-hover/item:text-[#ff003c]/70">// Injection</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#ff003c] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Hydra <span class="text-[#ff003c]/30 group-hover/item:text-[#ff003c]/70">// Brute_Force</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-6 border-t-[2px] border-[#00FF41] group" style="--glow-color: #00FF41;">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="text-[#00FF41] mono text-sm font-bold glow-green group-hover:text-white transition-colors">
+                    03 // ACTIVE DIRECTORY
+                </h4>
+                <div class="w-1.5 h-1.5 bg-[#00FF41] rounded-full animate-pulse shadow-[0_0_5px_#00FF41]"></div>
+            </div>
+            <div class="h-px w-full bg-[#00FF41]/20 mb-4 group-hover:bg-[#00FF41]/50 transition-colors"></div>
+            <ul class="text-xs text-gray-500 mono space-y-3">
+                <li class="group/item flex items-center gap-2 hover:text-[#00FF41] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    BloodHound <span class="text-[#00FF41]/30 group-hover/item:text-[#00FF41]/70">// Graph_Theory</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#00FF41] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Mimikatz <span class="text-[#00FF41]/30 group-hover/item:text-[#00FF41]/70">// Cred_Dump</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#00FF41] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Impacket <span class="text-[#00FF41]/30 group-hover/item:text-[#00FF41]/70">// RPC_Abuse</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-6 border-t-[2px] border-[#a855f7] group" style="--glow-color: #a855f7;">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="text-[#a855f7] mono text-sm font-bold glow-purple group-hover:text-white transition-colors">
+                    04 // C2 INFRASTRUCTURE
+                </h4>
+                <div class="w-1.5 h-1.5 bg-[#a855f7] rounded-full animate-pulse shadow-[0_0_5px_#a855f7]"></div>
+            </div>
+            <div class="h-px w-full bg-[#a855f7]/20 mb-4 group-hover:bg-[#a855f7]/50 transition-colors"></div>
+            <ul class="text-xs text-gray-500 mono space-y-3">
+                <li class="group/item flex items-center gap-2 hover:text-[#a855f7] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Cobalt Strike <span class="text-[#a855f7]/30 group-hover/item:text-[#a855f7]/70">// Red_Ops</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#a855f7] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Sliver <span class="text-[#a855f7]/30 group-hover/item:text-[#a855f7]/70">// Open_Source</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#a855f7] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Havoc <span class="text-[#a855f7]/30 group-hover/item:text-[#a855f7]/70">// EDR_Evasion</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-6 border-t-[2px] border-[#fbbf24] group" style="--glow-color: #fbbf24;">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="text-[#fbbf24] mono text-sm font-bold glow-yellow group-hover:text-white transition-colors">
+                    05 // PRIVILEGE ESC
+                </h4>
+                <div class="w-1.5 h-1.5 bg-[#fbbf24] rounded-full animate-pulse shadow-[0_0_5px_#fbbf24]"></div>
+            </div>
+            <div class="h-px w-full bg-[#fbbf24]/20 mb-4 group-hover:bg-[#fbbf24]/50 transition-colors"></div>
+            <ul class="text-xs text-gray-500 mono space-y-3">
+                <li class="group/item flex items-center gap-2 hover:text-[#fbbf24] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    LinPEAS <span class="text-[#fbbf24]/30 group-hover/item:text-[#fbbf24]/70">// Linux_Enum</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#fbbf24] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    WinPEAS <span class="text-[#fbbf24]/30 group-hover/item:text-[#fbbf24]/70">// Win_Enum</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-[#fbbf24] transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    GTFOBins <span class="text-[#fbbf24]/30 group-hover/item:text-[#fbbf24]/70">// Binary_Abuse</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="cyber-card p-6 border-t-[2px] border-white group" style="--glow-color: #ffffff;">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="text-white mono text-sm font-bold glow-white group-hover:text-gray-300 transition-colors">
+                    06 // VULN ANALYSIS
+                </h4>
+                <div class="w-1.5 h-1.5 bg-white rounded-full animate-pulse shadow-[0_0_5px_white]"></div>
+            </div>
+            <div class="h-px w-full bg-white/20 mb-4 group-hover:bg-white/50 transition-colors"></div>
+            <ul class="text-xs text-gray-500 mono space-y-3">
+                <li class="group/item flex items-center gap-2 hover:text-white transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Nessus <span class="text-white/30 group-hover/item:text-white/70">// Assessment</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-white transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Nuclei <span class="text-white/30 group-hover/item:text-white/70">// Templates</span>
+                </li>
+                <li class="group/item flex items-center gap-2 hover:text-white transition-colors cursor-crosshair">
+                    <span class="opacity-0 group-hover/item:opacity-100 transition-opacity">»</span> 
+                    Nikto <span class="text-white/30 group-hover/item:text-white/70">// Web_Server</span>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+   <section id="console" class="mb-32 relative z-10">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-[#050505] border border-[#333] rounded-sm shadow-[0_0_50px_rgba(0,243,255,0.15)] relative overflow-hidden group">
+            
+            <div class="bg-[#0a0a0a] px-4 py-2 flex justify-between items-center border-b border-[#222]">
+                <div class="flex gap-4 items-center">
+                    <div class="flex gap-2">
+                        <div class="w-2.5 h-2.5 rounded-full bg-[#ff003c] shadow-[0_0_8px_#ff003c]"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-[#fbbf24] opacity-50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-[#00FF41] opacity-50"></div>
+                    </div>
+                    <div class="mono text-[10px] text-[#00f3ff]/70 tracking-widest">
+                        ROOT@SHADOWBORNE-NODE:~ (TOR_V3)
+                    </div>
+                </div>
+                <div class="mono text-[10px] text-[#333]">UPTIME: <span id="uptime-counter">00:00:00</span></div>
+            </div>
+
+            <div id="terminal-window" 
+                 class="p-6 h-[450px] overflow-y-auto mono text-sm space-y-1 font-light text-gray-400 scrollbar-hide bg-black/95 relative">
+                 
+                <div id="terminal-sticky-header" class="mb-6 pb-4 border-b border-dashed border-gray-800 select-none">
+                    
+                    <div class="font-bold leading-[1.1] mb-4 text-[10px] md:text-xs whitespace-pre">
+<span class="text-gray-600">      .           .</span>
+<span class="text-gray-600">    /' \         / `\</span>
+<span class="text-gray-600">   /   | .---.  |   \</span>
+<span class="text-gray-600">  |    |/ </span><span class="text-[#ff003c]"> _  _ </span><span class="text-gray-600"> \|    |</span>   <span class="text-[#00f3ff] font-bold">:: SHADOW_OS_KERNEL ::</span>
+<span class="text-gray-600">  |    |\ </span><span class="text-[#ff003c]">  __  </span><span class="text-gray-600"> /|    |</span>   <span class="text-gray-500">v9.0.4-nightly [unstable]</span>
+<span class="text-gray-600">   \   | </span><span class="text-[#00f3ff]">'---'</span><span class="text-gray-600">  |   /</span>    
+<span class="text-gray-600">    \./         \./</span>      <span class="text-[#ff003c] animate-pulse">WARNING: ROOT ACCESS DETECTED</span>
+<span class="text-gray-600">       |   |</span>
+<span class="text-gray-600">       |   |</span>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row md:justify-between gap-2 border-l-2 border-[#ff003c] pl-3">
+                        <div class="text-xs">
+                            <div class="mb-1">
+                                <span class="text-[#00f3ff]">NET_STATUS:</span> 
+                                <span class="text-white">ONION_ROUTER_V3</span> 
+                                <span class="text-green-500">[SECURE]</span>
+                            </div>
+                            <div>
+                                <span class="text-[#00f3ff]">ENCRYPTION:</span> 
+                                <span class="text-white">AES-256-GCM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-[10px] text-gray-500 self-end font-mono text-right opacity-70">
+                            <div>MEM_ALLOC: 64TB</div>
+                            <div>CPU_LOAD: 12%</div>
                         </div>
                     </div>
-
-                    <div id="terminal-output"
-                        class="p-6 h-[350px] overflow-y-auto mono text-sm space-y-2 font-light text-gray-500 scrollbar-hide">
-                    </div>
-
-                    <div class="p-4 bg-black border-t border-[#222] flex items-center relative">
-                        <span class="text-[#ff003c] mr-3 font-bold">➜</span>
-                        <input type="text" id="terminal-input"
-                            class="w-full bg-transparent outline-none border-none text-[#00f3ff] mono placeholder-gray-800"
-                            placeholder="Enter command..." autocomplete="off">
-                    </div>
                 </div>
+
+                <div id="terminal-output"></div>
             </div>
-        </section>
+
+            <div class="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] z-20 opacity-20"></div>
+
+            <div class="p-4 bg-[#080808] border-t border-[#222] flex items-center relative z-30">
+                <span class="text-[#00f3ff] mr-3 font-bold text-xs">root@shadowborne:~$</span>
+                <input type="text" id="terminal-input" 
+                       class="w-full bg-transparent outline-none border-none text-[#00FF41] mono placeholder-gray-800 text-sm"
+                       placeholder="Type 'help' to initialize protocols..." autocomplete="off" spellcheck="false">
+                <div class="absolute right-4 text-[10px] text-gray-600 mono hidden md:block">ENCRYPTED // AES-256</div>
+            </div>
+        </div>
+    </div>
+</section>
 
         <section id="contact" class="mb-40 relative z-10 border-t border-white/5 pt-20">
             <div class="flex items-center gap-4 mb-16">
@@ -364,6 +522,7 @@
     </div>
     <script src="pgp.js"></script>
     <script src="terminal.js"></script>
+    <script src="bg.js"></script>
 </body>
 
 </html>
