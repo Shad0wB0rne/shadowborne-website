@@ -239,3 +239,28 @@ a, button, input, .cursor-pointer {
     display: none;  /* Safari and Chrome */
 }
 
+/* =========================================
+   MOBILE STABILIZATION & OVERSCROLL FIX
+   Add to bottom of styles.css
+   ========================================= */
+
+html, body {
+    /* Stop the 'rubber band' bounce effect on mobile */
+    overscroll-behavior-y: none; 
+    
+    /* Ensure the 'behind' layer is pitch black to hide rendering glitches */
+    background-color: #000000;
+    
+    /* Lock height to prevent address-bar jitter */
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Optimize animations for mobile GPU to prevent tearing/flickering */
+.scanline, .crt-flicker, .bg-grid {
+    will-change: opacity, transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
