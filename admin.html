@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM_FAILURE // NET_WATCH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Rajdhani:wght@600&family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --bg: #020005;
+            --cyber-yellow: #fcee0a;
+            --cyber-blue: #00f0ff;
+            --cyber-red: #ff003c;
+            --glass: rgba(10, 10, 15, 0.9);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--cyber-blue);
+            font-family: 'Rajdhani', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+            cursor: none;
+        }
+
+        /* --- CYBERPUNK HUD FX --- */
+        .scan-grid {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image: 
+                linear-gradient(rgba(0, 240, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 10s linear infinite;
+            opacity: 0.3;
+        }
+        @keyframes grid-move { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(40px); } }
+
+        .crt-overlay {
+            position: fixed; inset: 0; pointer-events: none; z-index: 90;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px; opacity: 0.7;
+        }
+
+        /* --- STAGE 1: BOOT --- */
+        #bios-layer {
+            position: fixed; inset: 0; background: #000; z-index: 100;
+            padding: 40px; font-family: 'Share Tech Mono'; font-size: 1.2rem;
+            color: var(--cyber-blue); display: flex; flex-direction: column;
+        }
+        .boot-ok { color: var(--cyber-yellow); }
+        .boot-err { color: var(--cyber-red); font-weight: bold; text-shadow: 0 0 5px var(--cyber-red); }
+
+        /* --- UI CONTAINER --- */
+        .ui-container {
+            position: fixed; inset: 0; z-index: 50;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.5s;
+        }
+
+        /* CYBERPUNK PANEL (ANGLED CORNERS) */
+        .cyber-panel {
+            background: var(--glass);
+            border: 2px solid var(--cyber-blue);
+            padding: 3rem; width: 100%; max-width: 550px;
+            position: relative;
+            clip-path: polygon(
+                0 0, 100% 0, 100% 85%, 95% 100%, 
+                20px 100%, 0 95%
+            );
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+        }
+        
+        .cyber-panel::before {
+            content: "SECURE_CONN"; position: absolute; top: 0; right: 0;
+            background: var(--cyber-blue); color: #000; padding: 2px 10px;
+            font-size: 0.7rem; font-weight: bold;
+        }
+
+        .cyber-panel.breached {
+            border-color: var(--cyber-red);
+            box-shadow: 0 0 80px var(--cyber-red);
+            animation: glitch-anim 0.2s infinite;
+        }
+        .cyber-panel.breached::before { content: "BREACH_DETECTED"; background: var(--cyber-red); }
+
+        h1 {
+            font-family: 'Orbitron'; font-size: 3.5rem; color: #fff;
+            text-shadow: 2px 2px 0px var(--cyber-blue), -2px -2px 0px var(--cyber-red);
+            margin-bottom: 2rem; text-align: center;
+        }
+
+        /* INPUTS */
+        .input-wrapper { position: relative; margin-bottom: 1.5rem; width: 100%; }
+        
+        input {
+            width: 100%; background: rgba(0,0,0,0.6); 
+            border: 1px solid var(--cyber-blue); border-left: 5px solid var(--cyber-blue);
+            color: #fff; padding: 15px; font-family: 'Share Tech Mono'; font-size: 1.3rem;
+            outline: none; transition: 0.3s;
+        }
+        input:focus { background: rgba(0, 240, 255, 0.1); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
+        input.possessed { 
+            border-color: var(--cyber-red); color: var(--cyber-red); 
+            background: rgba(255, 0, 60, 0.1); font-weight: bold;
+        }
+
+        .kill-btn {
+            width: 100%; padding: 15px; background: var(--cyber-yellow);
+            color: #000; font-family: 'Orbitron'; font-weight: 900; font-size: 1.2rem;
+            clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+            cursor: none; transition: 0.2s; border: none; margin-top: 1rem;
+        }
+        .kill-btn:hover { background: #fff; box-shadow: 0 0 40px var(--cyber-yellow); }
+
+        /* --- CHAT HUD --- */
+        .chat-hud {
+            position: fixed; top: 100px; right: -400px; width: 300px;
+            background: rgba(0,0,0,0.9); border-right: 4px solid var(--cyber-blue);
+            z-index: 60; transition: right 0.5s;
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 10%);
+        }
+        .chat-hud.open { right: 20px; }
+        .chat-header { background: var(--cyber-blue); color: #000; padding: 5px 15px; font-weight: bold; }
+        .chat-content { padding: 15px; height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .msg { font-size: 0.9rem; border-left: 2px solid var(--cyber-yellow); padding-left: 8px; opacity: 0; animation: fade-in 0.3s forwards; }
+        .msg.sys { border: none; text-align: center; color: #666; font-size: 0.7rem; }
+
+        /* --- TERMINAL (Bottom) --- */
+        .terminal {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 250px;
+            background: rgba(0,0,0,0.95); border-top: 2px solid var(--cyber-red);
+            z-index: 50; display: none; flex-direction: column; justify-content: flex-end;
+            padding: 20px; font-family: 'Share Tech Mono'; font-size: 1.1rem; pointer-events: none;
+        }
+        .log-line { margin-bottom: 2px; }
+        .red { color: var(--cyber-red); text-shadow: 0 0 5px var(--cyber-red); }
+        .yellow { color: var(--cyber-yellow); }
+
+        /* --- FINALE --- */
+        #leak-screen {
+            display: none; position: fixed; inset: 0; background: #000; z-index: 200;
+            flex-direction: column; align-items: center; justify-content: center;
+            font-family: 'Orbitron';
+        }
+
+        /* --- CURSOR --- */
+        #cursor {
+            width: 20px; height: 20px; border: 2px solid var(--cyber-yellow);
+            position: fixed; z-index: 9999; pointer-events: none;
+            transform: translate(-50%, -50%); mix-blend-mode: exclusion;
+        }
+        #cursor::after {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 4px; height: 4px;
+            background: var(--cyber-red); transform: translate(-50%, -50%);
+        }
+
+        @keyframes glitch-anim {
+            0% { clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 20px 100%, 0 95%); transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { clip-path: polygon(0 5%, 100% 0, 100% 85%, 90% 100%, 10px 100%, 0 90%); }
+            100% { transform: translate(0); }
+        }
+        @keyframes fade-in { to { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div class="crt-overlay"></div>
+    <div class="scan-grid"></div>
+
+    <div id="bios-layer">
+        <div class="mb-4 text-cyan-400 font-bold tracking-widest">NETWATCH_OS_v9.2 // NEURAL_LINK_ESTABLISHED</div>
+        <div id="bios-logs"></div>
+    </div>
+
+    <div class="ui-container" id="uiLayer">
+        <div class="cyber-panel" id="loginBox">
+            <h1>SHADOWBORNE</h1>
+            <div class="text-center mb-8 text-xs tracking-[0.5em] text-gray-500 animate-pulse">ICE_BREAKER_PROTOCOL_ACTIVE</div>
+
+            <form id="trapForm" autocomplete="off" style="width: 100%;">
+                <div class="input-wrapper">
+                    <div class="text-[10px] text-cyan-500 mb-1 tracking-widest">>> IDENTITY_STRING</div>
+                    <input type="text" placeholder="SHADOWBORNE" id="uid" maxlength="20">
+                </div>
+                
+                <div class="input-wrapper">
+                    <div class="text-[10px] text-cyan-500 mb-1 tracking-widest">>> DECRYPTION_KEY</div>
+                    <input type="text" placeholder="****************" id="pwd">
+                </div>
+                
+                <button type="submit" class="kill-btn" id="submitBtn">JACK_IN</button>
+            </form>
+
+            <div class="mt-6 text-center">
+                <span class="text-[9px] text-red-500 cursor-none border-b border-red-900" id="abortBtn">EMERGENCY_JACK_OUT [ESC]</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-hud" id="chatBox">
+        <div class="chat-header">NET_ADMIN</div>
+        <div class="chat-content" id="chatContent"></div>
+    </div>
+
+    <div class="terminal" id="terminal">
+        <div id="logs"></div>
+    </div>
+
+    <div id="leak-screen">
+        <h1 class="text-6xl text-red-600 mb-4 animate-pulse">SYSTEM_FLATLINED</h1>
+        <div class="border border-red-600 p-8 bg-black w-3/4 max-w-2xl text-left font-mono text-sm">
+            <p class="text-yellow-400 mb-4">>> NEURAL_TRACE_COMPLETE</p>
+            <p class="text-gray-400">TARGET: <span id="finalIP" class="text-white">...</span></p>
+            <p class="text-gray-400">LOCATION: <span id="finalLoc" class="text-white">...</span></p>
+            <p class="text-gray-400">ISP: <span id="finalISP" class="text-white">...</span></p>
+            <div class="w-full h-1 bg-gray-800 mt-6 mb-2"><div class="h-full bg-red-600 w-full animate-pulse"></div></div>
+            <p class="text-red-500 text-center">UPLOADING TO DARKNET MARKETPLACE...</p>
+        </div>
+    </div>
+
+    <script>
+        // 1. CURSOR
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // 2. BOOT SEQUENCE (Neural Theme)
+        window.onload = async () => {
+            const bios = document.getElementById('bios-logs');
+            const steps = [
+                `SYNCING_NEURAL_INTERFACE... <span class="boot-ok">CONNECTED</span>`,
+                `CHECKING_BIOMETRICS... <span class="boot-ok">MATCH</span>`,
+                `LOADING_ICE_BREAKER... <span class="boot-ok">LOADED</span>`,
+                `PROXY_CHAIN: NODE_1 -> NODE_2 -> NODE_3`,
+                `<span class="boot-err">WARNING: NETWATCH TRACKER DETECTED</span>`,
+                `BYPASSING_FIREWALL...`,
+                `SYSTEM_READY.`
+            ];
+
+            for(const line of steps) {
+                bios.innerHTML += `<div class="mb-1">> ${line}</div>`;
+                await new Promise(r => setTimeout(r, 200));
+            }
+            await new Promise(r => setTimeout(r, 600));
+            document.getElementById('bios-layer').style.display = 'none';
+            document.getElementById('uiLayer').style.opacity = '1';
+        };
+
+        // 3. INPUT POSSESSION
+        const pwdInput = document.getElementById('pwd');
+        const phrases = ["I_OWN_THIS_SYSTEM", "NO_DISCONNECT", "THE_NET_SEES_ALL", "YOU_ARE_TRAPPED"];
+        let pIdx = 0, cIdx = 0;
+
+        pwdInput.addEventListener('input', (e) => {
+            e.preventDefault();
+            playScreech();
+            
+            const phrase = phrases[pIdx];
+            if(cIdx < phrase.length) {
+                pwdInput.value = phrase.substring(0, cIdx + 1);
+                cIdx++;
+            } else {
+                cIdx = 0; pIdx = (pIdx + 1) % phrases.length;
+                pwdInput.value = "";
+            }
+            pwdInput.classList.add('possessed');
+        });
+
+        // 4. ABORT TRAP
+        document.getElementById('abortBtn').addEventListener('click', () => {
+            addChat("Jack-out failed. You're stuck.");
+            document.getElementById('trapForm').dispatchEvent(new Event('submit'));
+        });
+
+        // 5. AI CHAT
+        const chatBox = document.getElementById('chatBox');
+        const uidInput = document.getElementById('uid');
+        let chatStarted = false;
+
+        function addChat(text, type="admin") {
+            const div = document.createElement('div');
+            div.className = `msg ${type}`;
+            div.innerHTML = type === 'sys' ? text : `<b>AI:</b> ${text}`;
+            document.getElementById('chatContent').appendChild(div);
+        }
+
+        uidInput.addEventListener('focus', () => {
+            if(!chatStarted) {
+                chatStarted = true;
+                chatBox.classList.add('open');
+                setTimeout(() => addChat("SECURE LINE ACTIVE", "sys"), 200);
+                setTimeout(() => addChat("Input the override code. Quickly."), 800);
+            }
+        });
+
+        // 6. AUDIO ENGINE & TTS (Voice of God)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        function playScreech() {
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+            osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+            osc.frequency.linearRampToValueAtTime(1000, audioCtx.currentTime + 0.1);
+            g.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.connect(g); g.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        function speak(text) {
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.pitch = 0.5; // Low robotic pitch
+            utter.rate = 0.9;
+            window.speechSynthesis.speak(utter);
+        }
+
+        // 7. TRAP LOGIC
+        document.getElementById('trapForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if(uidInput.value.toUpperCase() !== "SHADOWBORNE") {
+                addChat("INVALID CREDENTIALS.");
+                uidInput.classList.add('possessed');
+                setTimeout(() => uidInput.classList.remove('possessed'), 500);
+                return;
+            }
+
+            // BREACH
+            addChat("TARGET ACQUIRED. TRACING...");
+            document.documentElement.requestFullscreen().catch(()=>{});
+            document.getElementById('loginBox').classList.add('breached');
+            document.querySelector('form').style.display = 'none';
+            document.getElementById('terminal').style.display = 'flex';
+
+            // GEOLOCATION + TTS
+            let ip = "192.168.1.X";
+            fetch('https://ipwho.is/').then(r=>r.json()).then(d=>{
+                if(d.success) {
+                    ip = d.ip;
+                    const loc = `${d.city}, ${d.country}`;
+                    document.getElementById('finalIP').innerText = ip;
+                    document.getElementById('finalLoc').innerText = loc;
+                    document.getElementById('finalISP').innerText = d.connection.isp;
+                    
+                    // TTS TRIGGER
+                    speak(`Target identified in ${d.city}. Uploading personal data now.`);
+                    setTimeout(() => addChat(`I see you in ${d.city}.`), 1000);
+                }
+            }).catch(()=>{});
+
+            // LOGS
+            const logs = [
+                { t: "NEURAL_HANDSHAKE... [ACCEPTED]", c: "yellow" },
+                { t: "BREACHING SUBNET...", c: "yellow" },
+                { t: "ACCESSING PERSONAL DRIVES...", c: "red" },
+                { t: "FOUND: 'wallet.dat'", c: "red" },
+                { t: "FOUND: 'passwords.txt'", c: "red" },
+                { t: "ENCRYPTING FILES...", c: "red" },
+                { t: "UPLOADING TO BLACK MARKET...", c: "red" },
+                { t: "SYSTEM FLATLINED.", c: "red" }
+            ];
+
+            let i = 0;
+            function runLogs() {
+                if(i >= logs.length) {
+                    document.getElementById('uiLayer').style.display = 'none';
+                    document.getElementById('terminal').style.display = 'none';
+                    document.getElementById('leak-screen').style.display = 'flex';
+                    setTimeout(() => window.location.href = "index.html", 7000);
+                    return;
+                }
+                const p = document.createElement('div');
+                p.className = `log-line ${logs[i].c}`;
+                p.innerText = `> ${logs[i].t}`;
+                document.getElementById('logs').appendChild(p);
+                playScreech();
+                i++;
+                setTimeout(runLogs, 800);
+            }
+            runLogs();
+        });
+        
+        // HACKER TRAP
+        console.log("%cSTOP", "color:red; font-size:60px; font-weight:bold;");
+        console.log("%cNETWATCH IS MONITORING THIS CONNECTION.", "color:white; background:red; font-size:15px; padding:5px;");
+    </script>
+</body>
+</html>
