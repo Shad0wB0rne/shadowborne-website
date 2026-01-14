@@ -1,0 +1,15 @@
+User-agent: *
+
+# --- SYSTEM DIRECTORIES ---
+Disallow: /admin/
+Disallow: /root/
+Disallow: /dashboard/
+
+# --- SENSITIVE DATA (HONEYTOKENS) ---
+Disallow: /backup/db_dump.sql
+Disallow: /config/private_keys.pem
+Disallow: /logs/access_log.txt
+
+# --- PROJECT SHADOWBORNE ---
+Disallow: /shadowborne_internal/
+Disallow: /source_code/
