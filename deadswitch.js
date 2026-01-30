@@ -24,33 +24,29 @@ function initDeadSwitch() {
         return;
     }
 
-    // Reveal the panel now that JS is loaded
+
     panel.classList.remove('hidden');
 
-    // 1. Display the Last Signature Date
+
     dateEl.innerText = LAST_CHECK_IN;
 
-    // 2. Calculate the Deadline
+
     const lastDate = new Date(LAST_CHECK_IN);
     const deadline = new Date(lastDate);
     deadline.setDate(deadline.getDate() + DAYS_ALLOWED);
 
-    // 3. Start the Countdown Loop
+
     const interval = setInterval(() => {
         const now = new Date();
         const diff = deadline - now;
 
         if (diff <= 0) {
-            // --- FAILURE STATE: PURGE PROTOCOL ---
             clearInterval(interval);
             executePurgeProtocol(DAYS_ALLOWED);
         } else {
-            // --- ACTIVE STATE: UPDATE TIMER ---
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
             const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            
-            // Format: "29d 12h 45m"
             timerEl.innerText = `${days}d ${hours}h ${mins}m REMAINING`;
         }
     }, 1000);
@@ -58,8 +54,7 @@ function initDeadSwitch() {
 
 function executePurgeProtocol(days) {
     console.error("CRITICAL FAILURE: DEAD SWITCH TRIGGERED.");
-    
-    // Create the "Red Screen of Death"
+
     const deathScreen = `
         <div style="
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -99,7 +94,7 @@ function executePurgeProtocol(days) {
         </div>
     `;
 
-    // Nuke the body and replace with death screen
+
     document.body.innerHTML = deathScreen;
     document.body.style.backgroundColor = "black";
     document.body.style.overflow = "hidden";

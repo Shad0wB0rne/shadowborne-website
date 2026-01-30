@@ -52,21 +52,21 @@ TQ==
 =SLcH
 -----END PGP PUBLIC KEY BLOCK-----`;
 
-   navigator.clipboard.writeText(pgpData).then(() => {
+    navigator.clipboard.writeText(pgpData).then(() => {
         const btnText = document.getElementById('pgp-btn-text');
         const btnContainer = btnText.closest('button'); // Get the button itself
         const original = btnText.innerText;
 
-        // Cyberpunk Success State
+
         btnText.innerText = "KEY_COPIED_TO_CLIPBOARD";
         btnText.classList.add("text-[#00FF41]"); // Turn Text Green
-        
-        // Add Green Glow to Border
+
+
         btnContainer.style.borderColor = "#00FF41";
         btnContainer.style.boxShadow = "0 0 20px rgba(0, 255, 65, 0.2)";
-        
+
         setTimeout(() => {
-            // Reset
+
             btnText.innerText = original;
             btnText.classList.remove("text-[#00FF41]");
             btnContainer.style.borderColor = "";

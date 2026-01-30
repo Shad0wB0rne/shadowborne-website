@@ -1,6 +1,4 @@
-/* terminal.js - SHADOW_OS V9.0 (GRANDMASTER) */
 
-// --- 1. SYSTEM CONFIGURATION ---
 const SYSTEM = {
     user: "root",
     host: "shadowborne-node",
@@ -9,7 +7,7 @@ const SYSTEM = {
     version: "v9.0.4-nightly"
 };
 
-// --- 2. VIRTUAL FILE SYSTEM ---
+
 const FILE_SYSTEM = {
     "readme.txt": `
 [ AUTO_LOG: SURVEILLANCE_NODE_07 ]
@@ -25,9 +23,9 @@ You are no longer the User. You are my Dataset.
 `
 };
 
-// --- 3. DOM ELEMENTS ---
-const outputDiv = document.getElementById('terminal-output'); // The dynamic log
-const terminalWindow = document.getElementById('terminal-window'); // The scroll container
+
+const outputDiv = document.getElementById('terminal-output');
+const terminalWindow = document.getElementById('terminal-window');
 const inputField = document.getElementById('terminal-input');
 
 let state = {
@@ -36,14 +34,14 @@ let state = {
     historyIndex: -1
 };
 
-// --- 4. CORE FUNCTIONS ---
+
 
 async function type(text, color = "text-gray-400", speed = SYSTEM.typingSpeed) {
     const div = document.createElement('div');
     div.className = `font-mono text-xs md:text-sm ${color} break-words whitespace-pre-wrap leading-tight mb-1`;
     outputDiv.appendChild(div);
 
-    // Auto Scroll
+
     terminalWindow.scrollTop = terminalWindow.scrollHeight;
 
     for (let char of text) {
@@ -61,7 +59,7 @@ function print(text, color = "text-gray-400") {
     terminalWindow.scrollTop = terminalWindow.scrollHeight;
 }
 
-// --- 5. REAL SYSTEM INFO (Neofetch) ---
+
 function getSystemInfo() {
     const ua = navigator.userAgent;
     let browser = "Unknown";
@@ -78,7 +76,7 @@ function getSystemInfo() {
     };
 }
 
-// --- 6. COMMAND PROCESSOR ---
+
 const COMMANDS = {
     'help': {
         desc: "List protocols",
@@ -97,7 +95,7 @@ const COMMANDS = {
         desc: "Real System Info",
         exec: async () => {
             const sys = getSystemInfo();
-            // Note: We use double backslashes \\ for the ASCII art to render correctly in JS
+
             const art = `
       .:::.       USER: ${SYSTEM.user}
      /  _  \\      HOST: ${SYSTEM.host}
@@ -154,7 +152,7 @@ const COMMANDS = {
     },
     'sudo': {
         exec: async (args) => {
-            // THE RIDDLE
+
             await type("ELEVATION REQUESTED...", "text-[#ff003c]");
             await new Promise(r => setTimeout(r, 600));
 
@@ -184,19 +182,18 @@ const COMMANDS = {
     },
     'clear': {
         exec: () => {
-            outputDiv.innerHTML = ''; // Only clears the log, not the sticky header
+            outputDiv.innerHTML = '';
         }
     }
 };
 
-// --- 7. EVENT LISTENER ---
+
 inputField.addEventListener('keydown', async (e) => {
     if (e.key === 'Enter') {
         const rawInput = inputField.value;
         inputField.value = '';
 
         if (state.isPasswordMode) {
-            // Password Logic
             if (rawInput === SYSTEM.password) {
                 state.isPasswordMode = false;
                 inputField.type = "text";
@@ -204,7 +201,7 @@ inputField.addEventListener('keydown', async (e) => {
                 await type("AUTHENTICATION VERIFIED.", "text-[#00FF41] font-bold");
                 await type("DOWNLOADING CLASSIFIED ASSET...", "text-[#00f3ff]");
 
-                // Download
+
                 const link = document.createElement('a');
                 link.href = "assets/Warning.jpg";
                 link.download = "Classified_Evidence.jpg";
@@ -235,7 +232,7 @@ inputField.addEventListener('keydown', async (e) => {
         else await type(`bash: ${cmd}: command not found`, "text-red-500");
     }
 
-    // History
+
     if (e.key === 'ArrowUp') {
         if (state.historyIndex > 0) inputField.value = state.commandHistory[--state.historyIndex];
     }
@@ -245,7 +242,7 @@ inputField.addEventListener('keydown', async (e) => {
     }
 });
 
-// --- 8. CYBERPUNK BOOT SEQUENCE (New) ---
+
 async function bootSequence() {
     const bootScreen = document.getElementById('boot-screen');
     const bootText = document.getElementById('boot-text');
@@ -257,14 +254,13 @@ async function bootSequence() {
         { t: "INJECTING_PAYLOAD_V9...", c: "text-[#ff003c]" },
         { t: "ESTABLISHING_HANDSHAKE...", c: "text-[#00f3ff]" },   // Cyan
         { t: "ENCRYPTION_KEY_EXCHANGED...", c: "text-[#00FF41]" },   // Green
-        
+
         // THE FINAL IMPACT LINE
         { t: "ROOT_PRIVILEGES_GRANTED...", c: "text-white font-bold tracking-widest text-lg" }
     ];
 
     for (let item of texts) {
         const p = document.createElement('div');
-        // Added 'animate-pulse' to the last line for extra effect
         p.className = `font-mono text-sm mb-1 ${item.c} ${item.t.includes('ROOT') ? 'animate-pulse' : ''}`;
         p.innerText = `> ${item.t}`;
         bootText.appendChild(p);
@@ -277,7 +273,6 @@ async function bootSequence() {
     }, 800);
 }
 
-// Start
 window.addEventListener('DOMContentLoaded', () => {
     bootSequence();
     type("ShadowOS Terminal Initialized...", "text-gray-600");
