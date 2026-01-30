@@ -681,6 +681,61 @@
     <script src="terminal.js"></script>
     <script src="bg.js"></script>
     <script src="deadswitch.js"></script>
+    <script>
+    
+    document.addEventListener('contextmenu', event => {
+        event.preventDefault();
+        alert('SYSTEM_ALERT: SOURCE_CODE_PROTECTED // ACCESS_DENIED');
+    });
+
+    
+    document.onkeydown = function(e) {
+        if (e.keyCode == 123) { 
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { 
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { 
+            return false;
+        }
+        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { 
+            return false;
+        }
+        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { 
+            return false;
+        }
+        if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { 
+             event.preventDefault();
+             alert('SYSTEM_ALERT: DOWNLOAD_BLOCKED');
+             return false;
+        }
+    }
+
+    
+    document.onselectstart = function() {
+        return false;
+    }
+
+(function() {
+    const element = new Image();
+    Object.defineProperty(element, 'id', {
+        get: function() {
+            window.location.href = "https://www.google.com"; 
+        }
+    });
+    console.log(element);
+})();
+
+setInterval(function() {
+    const t0 = Date.now();
+    eval('debugger'); 
+    const t1 = Date.now();
+    if (t1 - t0 > 100) {
+        document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:20%'>INTRUSION DETECTED. IP LOGGED.</h1>";
+    }
+}, 1000);
+</script>
 </body>
 
 </html>
