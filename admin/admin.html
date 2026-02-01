@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>/// SYSTEM_SEIZED ///</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Rajdhani:wght@600&family=Nosifer&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --neon-green: #00FF41;
+            --neon-cyan: #00f3ff;
+            --neon-pink: #ff003c;
+            --dark-bg: #050505;
+            --panel-bg: rgba(10, 10, 10, 0.95);
+        }
+
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            cursor: none !important;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--neon-green);
+            font-family: 'Fira Code', monospace;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 1000;
+            background-size: 100% 3px, 3px 100%;
+            pointer-events: none;
+        }
+
+
+        #init-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        .start-btn {
+            border: 2px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 20px 40px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            text-align: center;
+            animation: pulse 1.5s infinite;
+        }
+
+
+        #interface {
+            display: none;
+            height: 100%;
+            padding: 20px;
+            grid-template-rows: auto 1fr;
+            gap: 20px;
+        }
+
+        header {
+            border-bottom: 2px solid var(--neon-pink);
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 2.5rem;
+            color: var(--neon-pink);
+            text-shadow: 0 0 10px var(--neon-pink);
+        }
+
+        .status {
+            font-size: 1.2rem;
+            color: var(--neon-cyan);
+        }
+
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .panel {
+            border: 1px solid var(--neon-green);
+            background: var(--panel-bg);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--neon-green);
+            color: black;
+            padding: 5px 15px;
+            font-weight: bold;
+        }
+
+        /* --- READABLE DATA TEXT --- */
+        .data-list {
+            margin-top: 30px;
+            list-style: none;
+            padding: 0;
+            font-size: 1.1rem;
+            overflow-y: auto;
+        }
+
+        .data-item {
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .value {
+            color: var(--neon-cyan);
+            font-weight: bold;
+            font-size: 1rem;
+            text-align: right;
+        }
+
+        .alert {
+            color: var(--neon-pink);
+            font-weight: bold;
+            animation: blink 0.5s infinite;
+        }
+
+        #console-log {
+            font-size: 0.9rem;
+            color: #aaa;
+            height: 100%;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .log-entry {
+            margin-top: 5px;
+            font-family: 'Fira Code';
+        }
+
+        .log-entry::before {
+            content: "> ";
+            color: var(--neon-green);
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.5;
+                box-shadow: 0 0 5px var(--neon-cyan);
+            }
+
+            100% {
+                opacity: 1;
+                box-shadow: 0 0 20px var(--neon-cyan);
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .status {
+                font-size: 0.9rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1.5fr 1fr;
+                overflow-y: auto;
+                padding-bottom: 50px;
+            }
+
+            .panel {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="init-overlay">
+        <div class="start-btn">INITIALIZE SYSTEM</div>
+        <p style="color:#666; margin-top:20px; text-align: center;">[ SENSORY WARNING: AUDIO & NO ESCAPE ]</p>
+    </div>
+
+    <div id="interface">
+        <header>
+            <h1>SHADOWBORNE_ADMIN</h1>
+            <span class="status">CONN: <span class="alert">COMPROMISED</span></span>
+        </header>
+
+        <div class="grid">
+            <div class="panel">
+                <div class="panel-title">TARGET_RECON_DATA</div>
+                <ul class="data-list">
+                    <li class="data-item"><span class="label">IP ADDRESS:</span> <span class="value"
+                            id="d-ip">TRACING...</span></li>
+                    <li class="data-item"><span class="label">LOCATION:</span> <span class="value"
+                            id="d-city">TRIANGULATING...</span></li>
+                    <li class="data-item"><span class="label">ISP NODE:</span> <span class="value"
+                            id="d-isp">SCANNING...</span></li>
+                    <li class="data-item"><span class="label">PLATFORM:</span> <span class="value" id="d-os">...</span>
+                    </li>
+                    <li class="data-item"><span class="label">CPU CORES:</span> <span class="value"
+                            id="d-cpu">...</span></li>
+                    <li class="data-item"><span class="label">RAM (EST):</span> <span class="value"
+                            id="d-ram">...</span></li>
+                    <li class="data-item"><span class="label">BATTERY:</span> <span class="value" id="d-bat">...</span>
+                    </li>
+                    <li class="data-item"><span class="label">CONN TYPE:</span> <span class="value"
+                            id="d-con">...</span></li>
+                </ul>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title" style="background:var(--neon-pink)">INTRUSION_LOGS</div>
+                <div id="console-log"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const _0x281217 = _0x54a3; (function (_0x1fccca, _0x2bdff9) { const _0x5b55e6 = _0x54a3, _0x4cd0de = _0x1fccca(); while (!![]) { try { const _0x28ba60 = -parseInt(_0x5b55e6(0xe5)) / 0x1 * (parseInt(_0x5b55e6(0x12d)) / 0x2) + parseInt(_0x5b55e6(0x10f)) / 0x3 * (parseInt(_0x5b55e6(0xd3)) / 0x4) + -parseInt(_0x5b55e6(0x109)) / 0x5 * (-parseInt(_0x5b55e6(0x127)) / 0x6) + parseInt(_0x5b55e6(0x102)) / 0x7 * (parseInt(_0x5b55e6(0xeb)) / 0x8) + parseInt(_0x5b55e6(0xf5)) / 0x9 * (parseInt(_0x5b55e6(0x11c)) / 0xa) + -parseInt(_0x5b55e6(0xed)) / 0xb + -parseInt(_0x5b55e6(0x133)) / 0xc; if (_0x28ba60 === _0x2bdff9) break; else _0x4cd0de['push'](_0x4cd0de['shift']()); } catch (_0x40f9ed) { _0x4cd0de['push'](_0x4cd0de['shift']()); } } }(_0x46ea, 0xd47a6)); function _0x46ea() { const _0x335020 = ['ctrlKey', 'ACCESS\x20DENIED.\x20DEPLOYING\x20BRUTE\x20FORCE\x20OVERRIDE...', 'text/plain', 'mediaDevices', 'preventDefault', 'log-entry', 'catch', 'd-bat', 'wakeLock', '1611078bxBUcd', 'color', 'shiftKey', 'onpopstate', 'gain', 'SCREEN\x20WAKE\x20LOCK:\x20ACTIVE', 'PROXY\x20DETECTED.', '767885JtABMc', 'keyCode', 'speak', '.\x0aI\x20know\x20you\x20have\x20', 'charCodeAt', 'DO\x20NOT\x20LOOK\x20AWAY.', '321WgXIgP', 'requestFullscreen', 'display', 'I\x20said,\x20stop\x20looking\x20at\x20my\x20code.', 'ISP\x20NODE\x20DETECTED:\x20', 'value', '\x20cores\x20processing\x20this\x20file.\x0aTurn\x20off\x20your\x20device.\x20Pull\x20the\x20plug.\x20It\x20does\x20not\x20matter.\x0aI\x20am\x20already\x20inside.\x0a-\x20SHADOWBORNE', 'title', 'toUpperCase', '\x20[EXACT]', 'clipboard', 'href', 'd-isp', '30kctTwQ', 'console-log', '\x20[NODE]', 'includes', 'd-con', 'POWER\x20SOURCE\x20IDENTIFIED:\x20', 'level', 'init-overlay', 'interface', 'style', 'scrollHeight', '66jxyNqQ', 'd-ip', 'getElementById', 'connect', 'SYSTEM\x20INITIALIZED.', 'rtt', '4nLqevo', 'destination', 'body', 'grid', 'requestPointerLock', 'pushState', '13553856SCeBIP', 'getCurrentPosition', 'start', 'THERE\x20IS\x20NO\x20GOING\x20BACK.', 'json', 'd-city', 'vibrate', 'createGain', 'innerText', 'onkeydown', 'TARGET\x20LOCKED:\x20', 'REQUESTING\x20OPTICAL\x20FEED...', 'Do\x20not\x20look\x20away.', 'then', 'appendChild', 'request', '\x20THREADS', 'addEventListener', 'UNKNOWN', 'round', 'hidden', 'className', 'I\x20have\x20your\x20exact\x20coordinates.', 'red', 'region', 'webkitConnection', '\x0aI\x20AM\x20WATCHING\x20YOU.\x0aI\x20have\x20logged\x20your\x20IP.\x0aI\x20have\x20mapped\x20your\x20hardware.\x0aI\x20know\x20you\x20are\x20using\x20', 'var(--neon-pink)', 'I\x20HAVE\x20CONTROL\x20OF\x20INPUT\x20DEVICES.', '13164pSWbra', 'type', 'effectiveType', 'pitch', 'https://ipapi.co/json/', 'innerHTML', 'createElement', 'frequency', 'geolocation', '\x20GB\x20[ALLOCATED]', 'speechSynthesis', 'hardwareConcurrency', 'getBattery', 'screen', 'platform', 'd-cpu', 'I\x20SEE\x20YOU\x20LEAVING', 'deviceMemory', '486146ztNYPx', 'connection', 'TRIANGULATING', 'city', 'scrollTop', 'none', '32hvAZCN', 'click', '3740781gDrqNl', 'div', 'org', 'coords', 'contextmenu', 'documentElement', 'I\x20have\x20traced\x20your\x20connection\x20to\x20', 'AudioContext', '1050183zLnpar', 'REQUESTING\x20SATELLITE\x20TRIANGULATION...', 'getUserMedia', 'writeText']; _0x46ea = function () { return _0x335020; }; return _0x46ea(); } const overlay = document[_0x281217(0x129)](_0x281217(0x123)), ui = document[_0x281217(0x129)](_0x281217(0x124)), logBox = document['getElementById'](_0x281217(0x11d)); let audioCtx, wakeLock = null; overlay[_0x281217(0x144)](_0x281217(0xec), async () => { const _0x44a064 = _0x281217; overlay[_0x44a064(0x125)]['display'] = _0x44a064(0xea), ui[_0x44a064(0x125)][_0x44a064(0x111)] = _0x44a064(0x130); if (document[_0x44a064(0x12f)][_0x44a064(0x131)]) document[_0x44a064(0x12f)]['requestPointerLock'](); if (document[_0x44a064(0xf2)][_0x44a064(0x110)]) document[_0x44a064(0xf2)][_0x44a064(0x110)]()[_0x44a064(0xff)](_0x96dcf3 => { }); if (_0x44a064(0x101) in navigator) try { wakeLock = await navigator[_0x44a064(0x101)][_0x44a064(0x142)](_0x44a064(0xe0)), log(_0x44a064(0x107)); } catch (_0x4df4c2) { } log(_0x44a064(0x12b)), log(_0x44a064(0xd2)), startDataHarvest(), startGPSHarvest(), startAudioBackground(), startAntiDebug(), triggerBiometricScare(), injectClipboardPoison(), floodHistory(); }); async function startDataHarvest() { const _0xc7873b = _0x281217; document[_0xc7873b(0x129)]('d-os')[_0xc7873b(0x13b)] = navigator[_0xc7873b(0xe1)]['toUpperCase'](), document['getElementById'](_0xc7873b(0xe2))[_0xc7873b(0x13b)] = (navigator[_0xc7873b(0xde)] || '?') + _0xc7873b(0x143), document[_0xc7873b(0x129)]('d-ram')[_0xc7873b(0x13b)] = (navigator[_0xc7873b(0xe4)] || '?') + _0xc7873b(0xdc); const _0x4ec8a8 = navigator[_0xc7873b(0xe6)] || navigator['mozConnection'] || navigator[_0xc7873b(0xcf)]; if (_0x4ec8a8) { const _0x30abd3 = _0x4ec8a8[_0xc7873b(0xd5)] ? _0x4ec8a8[_0xc7873b(0xd5)][_0xc7873b(0x117)]() : _0xc7873b(0x145), _0x344c41 = _0x4ec8a8[_0xc7873b(0x12c)] ? _0x4ec8a8[_0xc7873b(0x12c)] + 'ms' : ''; document[_0xc7873b(0x129)](_0xc7873b(0x120))[_0xc7873b(0x13b)] = _0x30abd3 + '\x20' + _0x344c41; } navigator[_0xc7873b(0xdf)] && navigator[_0xc7873b(0xdf)]()[_0xc7873b(0x140)](_0xaedc89 => { const _0x133666 = _0xc7873b; document[_0x133666(0x129)](_0x133666(0x100))[_0x133666(0x13b)] = Math['round'](_0xaedc89[_0x133666(0x122)] * 0x64) + '%\x20' + (_0xaedc89['charging'] ? '[PWR]' : ''), log(_0x133666(0x121) + Math[_0x133666(0x146)](_0xaedc89[_0x133666(0x122)] * 0x64) + '%'); }); try { const _0x47fed9 = await fetch(_0xc7873b(0xd7)), _0x5a60b7 = await _0x47fed9[_0xc7873b(0x137)](); _0x5a60b7['ip'] && (document[_0xc7873b(0x129)](_0xc7873b(0x128))[_0xc7873b(0x13b)] = _0x5a60b7['ip'], document[_0xc7873b(0x129)](_0xc7873b(0x138))[_0xc7873b(0x13b)][_0xc7873b(0x11f)](_0xc7873b(0xe7)) && (document[_0xc7873b(0x129)](_0xc7873b(0x138))[_0xc7873b(0x13b)] = (_0x5a60b7[_0xc7873b(0xe8)] + ',\x20' + _0x5a60b7[_0xc7873b(0x14b)] + _0xc7873b(0x11e))['toUpperCase'](), log(_0xc7873b(0x113) + _0x5a60b7[_0xc7873b(0xe8)][_0xc7873b(0x117)]()), speak(_0xc7873b(0xf3) + _0x5a60b7[_0xc7873b(0xe8)] + '.')), document[_0xc7873b(0x129)](_0xc7873b(0x11b))[_0xc7873b(0x13b)] = _0x5a60b7[_0xc7873b(0xef)]['toUpperCase'](), setTimeout(downloadArtifact, 0x9c4)); } catch (_0x16d223) { log(_0xc7873b(0x108), _0xc7873b(0x14a)); } } function startGPSHarvest() { const _0x1f7375 = _0x281217; _0x1f7375(0xdb) in navigator && (log(_0x1f7375(0xf6), 'red'), navigator[_0x1f7375(0xdb)][_0x1f7375(0x134)](_0x319a22 => { const _0x1020b7 = _0x1f7375, _0x3e56ee = _0x319a22[_0x1020b7(0xf0)]['latitude']['toFixed'](0x4), _0x2583f8 = _0x319a22[_0x1020b7(0xf0)]['longitude']['toFixed'](0x4); document['getElementById'](_0x1020b7(0x138))[_0x1020b7(0x13b)] = _0x3e56ee + ',\x20' + _0x2583f8 + _0x1020b7(0x118), log(_0x1020b7(0x13d) + _0x3e56ee + ',\x20' + _0x2583f8, _0x1020b7(0x14a)), speak(_0x1020b7(0x149)); }, _0x1304f8 => { }, { 'enableHighAccuracy': !![] })); } function triggerBiometricScare() { setTimeout(() => { const _0xe7bcdb = _0x54a3; log(_0xe7bcdb(0x13e), _0xe7bcdb(0x14a)), navigator[_0xe7bcdb(0xfc)][_0xe7bcdb(0xf7)]({ 'video': !![], 'audio': !![] })[_0xe7bcdb(0x140)](_0x46a1fe => { log('ACCESS\x20GRANTED.\x20RECORDING.', 'red'), speak('I\x20can\x20see\x20you\x20now.'); })[_0xe7bcdb(0xff)](_0x286387 => { const _0x5601ff = _0xe7bcdb; log(_0x5601ff(0xfa), _0x5601ff(0x14a)); }); }, 0xbb8); } function injectClipboardPoison() { const _0x2db704 = _0x281217; navigator[_0x2db704(0x119)][_0x2db704(0xf8)]('I_AM_COMPROMISED_BY_SHADOWBORNE')[_0x2db704(0xff)](_0x516e87 => { }); } function floodHistory() { const _0x2aa8b1 = _0x281217; for (let _0xe8cd09 = 0x0; _0xe8cd09 < 0xa; _0xe8cd09++) { history[_0x2aa8b1(0x132)](null, document['title'], location[_0x2aa8b1(0x11a)]); } window[_0x2aa8b1(0x105)] = function () { const _0x9d996 = _0x2aa8b1; history['pushState'](null, document[_0x9d996(0x116)], location[_0x9d996(0x11a)]), log(_0x9d996(0x136), 'red'); }; } function _0x54a3(_0x27348e, _0x2992ba) { _0x27348e = _0x27348e - 0xcf; const _0x46eaad = _0x46ea(); let _0x54a395 = _0x46eaad[_0x27348e]; return _0x54a395; } function log(_0x5df5d4, _0x1fb5aa) { const _0x1325ea = _0x281217, _0xa49be = document[_0x1325ea(0xd9)](_0x1325ea(0xee)); _0xa49be[_0x1325ea(0x148)] = _0x1325ea(0xfe), _0xa49be[_0x1325ea(0x13b)] = _0x5df5d4; if (_0x1fb5aa === _0x1325ea(0x14a)) _0xa49be[_0x1325ea(0x125)][_0x1325ea(0x103)] = _0x1325ea(0xd1); logBox[_0x1325ea(0x141)](_0xa49be), logBox[_0x1325ea(0xe9)] = logBox[_0x1325ea(0x126)]; } function speak(_0x4bb3a6) { const _0x1b2dd8 = _0x281217, _0x86ba59 = window[_0x1b2dd8(0xdd)], _0x372291 = new SpeechSynthesisUtterance(_0x4bb3a6); _0x372291[_0x1b2dd8(0xd6)] = 0.5, _0x372291['rate'] = 0.8, _0x86ba59[_0x1b2dd8(0x10b)](_0x372291); } function startAudioBackground() { const _0x12f517 = _0x281217; audioCtx = new (window[(_0x12f517(0xf4))] || window['webkitAudioContext'])(); const _0x407d8f = audioCtx['createOscillator'](), _0x31fb5d = audioCtx[_0x12f517(0x13a)](); _0x407d8f[_0x12f517(0xd4)] = 'sawtooth', _0x407d8f[_0x12f517(0xda)][_0x12f517(0x114)] = 0x28, _0x31fb5d[_0x12f517(0x106)]['value'] = 0.1, _0x407d8f['connect'](_0x31fb5d), _0x31fb5d[_0x12f517(0x12a)](audioCtx[_0x12f517(0x12e)]), _0x407d8f[_0x12f517(0x135)](); } function downloadArtifact() { const _0xe84661 = _0x281217, _0x5d2f13 = _0xe84661(0xd0) + navigator[_0xe84661(0xe1)] + _0xe84661(0x10c) + navigator['hardwareConcurrency'] + _0xe84661(0x115), _0x1e35c8 = new Blob([_0x5d2f13], { 'type': _0xe84661(0xfb) }), _0x2b92b1 = document[_0xe84661(0xd9)]('a'); _0x2b92b1[_0xe84661(0x11a)] = URL['createObjectURL'](_0x1e35c8), _0x2b92b1['download'] = 'I_AM_WATCHING_YOU.txt', _0x2b92b1[_0xe84661(0xec)](); } function startAntiDebug() { setInterval(() => { const _0x5d9734 = performance['now'](); debugger; const _0x51b7e8 = performance['now'](); if (_0x51b7e8 - _0x5d9734 > 0x64) punishDebugger(); }, 0x64); } function punishDebugger() { const _0x5b7185 = _0x281217; document[_0x5b7185(0x12f)][_0x5b7185(0xd8)] = '\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;\x20justify-content:center;\x20align-items:center;\x20height:100vh;\x20background:black;\x20color:red;\x20flex-direction:column;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h1\x20style=\x22font-family:\x27Nosifer\x27;\x20font-size:5rem;\x22>I\x20SEE\x20YOU</h1>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22font-family:\x27Fira\x20Code\x27;\x20font-size:1.5rem;\x22>CLOSE\x20THE\x20TOOLS.\x20NOW.</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>', document['title'] = '⚠️\x20CRITICAL\x20ALERT\x20⚠️', speak(_0x5b7185(0x112)); if (navigator[_0x5b7185(0x139)]) navigator[_0x5b7185(0x139)]([0xc8, 0x64, 0xc8, 0x64, 0xc8]); } document[_0x281217(0x144)](_0x281217(0xf1), _0xfdf5c7 => _0xfdf5c7[_0x281217(0xfd)]()), document[_0x281217(0x13c)] = function (_0x2ab102) { const _0x22a345 = _0x281217; if (_0x2ab102[_0x22a345(0x10a)] == 0x7b) return ![]; if (_0x2ab102[_0x22a345(0xf9)] && _0x2ab102['shiftKey'] && _0x2ab102[_0x22a345(0x10a)] == 'I'[_0x22a345(0x10d)](0x0)) return ![]; if (_0x2ab102[_0x22a345(0xf9)] && _0x2ab102[_0x22a345(0x104)] && _0x2ab102[_0x22a345(0x10a)] == 'C'[_0x22a345(0x10d)](0x0)) return ![]; if (_0x2ab102['ctrlKey'] && _0x2ab102[_0x22a345(0x10a)] == 'U'[_0x22a345(0x10d)](0x0)) return ![]; }, document[_0x281217(0x144)]('visibilitychange', () => { const _0x430f32 = _0x281217; document[_0x430f32(0x147)] ? document[_0x430f32(0x116)] = _0x430f32(0xe3) : (document['title'] = '///\x20SYSTEM_SEIZED\x20///', log(_0x430f32(0x10e), 'red'), speak(_0x430f32(0x13f))); });
+    </script>
+</body>
+
+</html>
