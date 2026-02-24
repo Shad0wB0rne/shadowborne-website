@@ -3,170 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHADOWBORNE // CREDENTIALS</title>
+    <title>SHADOWBORNE // CLEARANCE_LEVEL</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Libre+Barcode+128&family=Rajdhani:wght@500;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap');
         
-        /* --- GLOBAL STABILIZATION & STEALTH SCROLL --- */
-        html { 
-            overflow-y: scroll; /* Stops the screen jerk/flicker */
-            overflow-x: hidden; /* Prevents horizontal scroll */
-            scrollbar-width: none; /* Firefox: Hide scrollbar */
-            -ms-overflow-style: none;  /* IE/Edge: Hide scrollbar */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; 
+            background-color: #050505;
+            overscroll-behavior: none; 
+        }
+
+        
+        #secure-container {
+            width: 100%;
+            height: 100%;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            position: relative;
+            z-index: 10;
+            
+            
+            scrollbar-width: none; 
+            -ms-overflow-style: none; 
         }
         
-        /* Chrome/Safari/Opera: Hide scrollbar */
-        html::-webkit-scrollbar { 
+        #secure-container::-webkit-scrollbar {
             display: none; 
         }
-
-        body { 
-            background-color: #050505; 
-            color: #e5e5e5; 
-            font-family: 'JetBrains Mono', monospace; 
-            overflow-x: hidden; 
-        }
-
-        .cyber-font { font-family: 'JetBrains Mono', monospace; letter-spacing: -2px; }
-
-        /* --- FIXED SCANLINE (The Root Cause of the Jerk) --- */
-        .scanline {
-            width: 100vw; 
-            height: 100vh;
-            position: fixed; /* FIXED: Prevents it from resizing the page */
-            top: 0;
-            left: 0;
-            z-index: 50;
-            background: linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0, 243, 255, 0.05) 50%, rgba(0,0,0,0) 100%);
-            opacity: 0.1;
-            animation: scanline 8s linear infinite;
-            pointer-events: none;
-        }
-        @keyframes scanline { 
-            0% { transform: translateY(-100%); } 
-            100% { transform: translateY(100%); } 
-        }
-
-        /* --- BACKGROUND GRID --- */
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-        }
-
-        /* --- GLOW UTILS --- */
-        .glow-cyan { text-shadow: 0 0 15px rgba(0, 243, 255, 0.5); }
-        .glow-pink { text-shadow: 0 0 15px rgba(255, 0, 60, 0.5); }
-        .glow-green { text-shadow: 0 0 15px rgba(0, 255, 65, 0.5); }
-        .glow-purple { text-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
-        .glow-yellow { text-shadow: 0 0 15px rgba(251, 191, 36, 0.5); }
-        .glow-white  { text-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
-
-        /* GLITCH ANIMATION FOR HOVER */
-        @keyframes glitch-skew {
-            0% { transform: skew(0deg); }
-            20% { transform: skew(-2deg); }
-            40% { transform: skew(2deg); }
-            60% { transform: skew(-1deg); }
-            80% { transform: skew(1deg); }
-            100% { transform: skew(0deg); }
-        }
-        .hover-glitch:hover { animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite; }
         
-        /* Internal Scrollbars (for text areas) - Keep these visible but styled */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #0a0a0a; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00f3ff; }
+
+        
+        .holo-card {
+            position: relative;
+            background: rgba(5, 5, 5, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transform: rotateX(0) rotateY(0);
+            transition: transform 0.1s ease-out;
+            backdrop-filter: blur(5px);
+        }
+
+        .holo-card::before {
+            content: "";
+            position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
+            background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.1) 45%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.1) 55%, transparent 60%);
+            transform: skewX(-20deg); transition: left 0.5s; pointer-events: none; z-index: 20;
+        }
+        .holo-card:hover::before { left: 150%; transition: left 0.8s ease-in-out; }
+
+        @keyframes internal-scan {
+            0% { top: -20%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 120%; opacity: 0; }
+        }
+
+        .watermark {
+            position: absolute; right: -30px; bottom: -30px; width: 220px; height: 220px;
+            opacity: 0.08; pointer-events: none; z-index: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 0 5px currentColor);
+        }
+        .holo-card:hover .watermark {
+            opacity: 0.25; transform: rotate(10deg) scale(1.1);
+        }
+
+        .verified-badge {
+            font-family: 'Rajdhani', sans-serif; font-weight: bold; letter-spacing: 2px;
+            text-shadow: 0 0 10px currentColor; box-shadow: 0 0 10px currentColor inset;
+        }
+
+        .barcode { font-family: 'Libre Barcode 128', cursive; font-size: 2.5rem; line-height: 1; transform: scaleY(1.5); opacity: 0.5; }
+        
+        .cyber-font { font-family: 'Orbitron', sans-serif; }
     </style>
 </head>
-<body class="min-h-screen p-8 md:p-12 relative overflow-x-hidden">
+<body class="selection:bg-[#ff003c] selection:text-white">
 
-    <div class="fixed inset-0 grid grid-cols-[repeat(40,minmax(0,1fr))] opacity-5 pointer-events-none z-0">
-        <div class="col-span-1 h-full border-r border-white/20"></div>
-        </div>
-    <div class="fixed inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#050505_100%)] pointer-events-none z-0"></div>
+    <div class="vignette" style="position: fixed;"></div>
+    <div class="crt-overlay" style="position: fixed;"></div>
+    <div class="noise-layer" style="position: fixed;"></div>
+    <div class="cyber-grid" style="position: fixed;"></div> 
+    <canvas id="cyber-canvas" class="fixed inset-0 z-0 opacity-40 pointer-events-none"></canvas>
 
-    <div class="relative z-10 max-w-6xl mx-auto">
+    <div id="secure-container">
         
-        <header class="flex justify-between items-end mb-16 border-b border-gray-800 pb-6">
-            <div>
-                <h1 class="text-4xl md:text-6xl font-black text-white cyber-font mb-2">
-                    VERIFIED <span class="text-[#00f3ff] glow-text">CREDENTIALS</span>
-                </h1>
-                <div class="flex gap-4 text-xs text-gray-500 font-mono">
-                    <span>> DATABASE_ACCESS: GRANTED</span>
-                    <span>> ENCRYPTION: NONE</span>
-                </div>
-            </div>
+        <div class="relative max-w-7xl mx-auto p-6 md:p-12 pb-20">
             
-            <a href="index.html" class="group flex items-center gap-2 px-4 py-2 border border-gray-800 hover:border-[#ff003c] transition-colors bg-black/50">
-                <span class="text-[#ff003c] group-hover:translate-x-[-2px] transition-transform"><</span>
-                <span class="text-xs text-gray-400 group-hover:text-white">RETURN_TO_BASE</span>
-            </a>
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            <div class="group relative bg-[#0a0a0a] border border-gray-800 p-1 hover:border-[#00f3ff] transition-all duration-300">
-                <div class="bg-black p-6 h-full flex flex-col relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
-                        <svg class="w-8 h-8 text-[#00f3ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    </div>
-                    
-                    <div class="text-[#00f3ff] text-xs font-bold mb-4 tracking-widest">COMPTIA SECURITY+</div>
-                    <h3 class="text-xl text-white font-bold mb-2">SY0-601 Certified</h3>
-                    <p class="text-gray-500 text-sm mb-6 flex-grow">Validated expertise in network security, threat management, and risk mitigation.</p>
-                    
-                    <div class="mt-auto pt-4 border-t border-gray-800 flex justify-between items-center text-xs font-mono">
-                        <span class="text-gray-600">ID: CAND-885920</span>
-                        <span class="text-[#00f3ff] opacity-0 group-hover:opacity-100 transition-opacity">VIEW_PROOF ></span>
+            <header class="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-gray-800 pb-6 gap-6 bg-black/50 backdrop-blur-sm p-6 border-l-2 border-l-[#ff003c]">
+                <div>
+                    <h1 class="text-4xl md:text-6xl font-black text-white tracking-tighter mb-2 cyber-font">
+                        OPERATIONAL <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#00f3ff] to-[#ff003c]">CLEARANCE</span>
+                    </h1>
+                    <div class="flex gap-4 text-xs text-gray-500 font-mono">
+                        <span class="text-[#00FF41] animate-pulse">● LEDGER_SYNCED</span>
+                        <span>// ENCRYPTED_SHA256</span>
                     </div>
                 </div>
-            </div>
-
-            <div class="group relative bg-[#0a0a0a] border border-gray-800 p-1 hover:border-[#ff003c] transition-all duration-300">
-                <div class="bg-black p-6 h-full flex flex-col relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
-                        <svg class="w-8 h-8 text-[#ff003c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                
+                <a href="index.html" class="group relative px-8 py-4 font-bold text-white transition-all duration-300 border border-gray-800 hover:border-[#ff003c] bg-black overflow-hidden cursor-pointer">
+                    <div class="absolute inset-0 bg-[#ff003c] translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-out z-0 opacity-20"></div>
+                    <div class="relative z-10 flex items-center gap-3 font-mono text-xs tracking-widest">
+                        <span class="text-[#ff003c] group-hover:translate-x-[-3px] transition-transform">&lt;&lt;</span>
+                        <span class="group-hover:text-[#ff003c] transition-colors">ABORT_SEQUENCE</span>
                     </div>
+                </a>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 perspective-container">
+
+                <div class="holo-card p-1 min-h-[350px] flex flex-col group cursor-crosshair relative overflow-hidden" 
+                     onmousemove="tiltCard(event, this)" onmouseleave="resetCard(this)"
+                     style="--theme: var(--neon-blue);">
                     
-                    <div class="text-[#ff003c] text-xs font-bold mb-4 tracking-widest">eLEARN SECURITY</div>
-                    <h3 class="text-xl text-white font-bold mb-2">eJPTv2</h3>
-                    <p class="text-gray-500 text-sm mb-6 flex-grow">Junior Penetration Tester. Practical assessment of manual exploitation and networking.</p>
-                    
-                    <div class="mt-auto pt-4 border-t border-gray-800 flex justify-between items-center text-xs font-mono">
-                        <span class="text-gray-600">ID: INE-9941</span>
-                        <span class="text-[#ff003c] opacity-0 group-hover:opacity-100 transition-opacity">VIEW_PROOF ></span>
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#00f3ff]/10 to-transparent h-[20%] w-full animate-[internal-scan_4s_linear_infinite] pointer-events-none z-20"></div>
+
+                    <div class="bg-black/80 h-full p-8 flex flex-col relative z-10 border border-[#00f3ff]/20 group-hover:border-[#00f3ff] transition-colors">
+                        
+                        <div class="absolute inset-0 opacity-10 pointer-events-none text-[8px] font-mono leading-none overflow-hidden text-[#00f3ff]" style="mask-image: linear-gradient(to bottom, transparent, black);">
+                            0F 2A 5C 99 1B 0F 2A 5C 99 1B 0F 2A 5C 99 1B 0F 2A 5C 99 1B
+                            0F 2A 5C 99 1B 0F 2A 5C 99 1B 0F 2A 5C 99 1B 0F 2A 5C 99 1B
+                        </div>
+
+                        <svg class="watermark text-[#00f3ff]" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1">
+                            <path d="M50 10 L90 90 H10 Z" stroke-dasharray="5,5"/>
+                            <circle cx="50" cy="10" r="3" fill="currentColor"/>
+                            <circle cx="90" cy="90" r="3" fill="currentColor"/>
+                            <circle cx="10" cy="90" r="3" fill="currentColor"/>
+                            <circle cx="50" cy="60" r="10" stroke="currentColor" opacity="0.5"/>
+                            <circle cx="50" cy="60" r="4" fill="currentColor"/>
+                            <path d="M50 10 L50 60 M10 90 L50 60 M90 90 L50 60" opacity="0.3"/>
+                        </svg>
+                        
+                        <div class="flex justify-between items-start mb-6 relative z-30">
+                            <div class="w-12 h-12 border border-[#00f3ff] flex items-center justify-center bg-[#00f3ff]/10 backdrop-blur-sm">
+                                <svg class="w-6 h-6 text-[#00f3ff]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            </div>
+                            <div class="verified-badge text-[#00f3ff] border border-[#00f3ff] px-2 py-1 bg-black/50 text-[10px]">TIER_1_CLEARANCE</div>
+                        </div>
+
+                        <div class="text-[#00f3ff] text-[10px] font-bold tracking-[0.2em] mb-1 opacity-80 font-mono">INFRASTRUCTURE // HARDENING</div>
+                        <h2 class="text-3xl text-white font-black leading-none mb-4 group-hover:text-[#00f3ff] transition-colors uppercase tracking-tighter drop-shadow-[0_0_5px_rgba(0,0,0,0.8)] cyber-font">
+                            NET_DEFENSE<br>SENTINEL
+                        </h2>
+                        
+                        <p class="text-gray-400 text-xs leading-relaxed mb-8 flex-grow border-l-2 border-[#00f3ff]/30 pl-3 relative z-30 font-mono">
+                            Advanced perimeter security protocols. Cryptographic key management and hardened architecture implementation.
+                        </p>
+
+                        <div class="mt-auto border-t border-dashed border-gray-800 pt-4 flex justify-between items-end relative z-30">
+                            <div class="text-[#00f3ff] barcode opacity-80">SEC_PROTO</div>
+                            <div class="text-[10px] text-gray-500 font-mono text-right">
+                                RANK: SENTINEL<br>
+                                AUTH: SY0-601
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="group relative bg-[#0a0a0a] border border-gray-800 p-1 hover:border-[#00FF41] transition-all duration-300">
-                <div class="bg-black p-6 h-full flex flex-col relative overflow-hidden">
-                    <div class="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-100 transition-opacity">
-                        <svg class="w-8 h-8 text-[#00FF41]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    </div>
-                    
-                    <div class="text-[#00FF41] text-xs font-bold mb-4 tracking-widest">GOOGLE</div>
-                    <h3 class="text-xl text-white font-bold mb-2">Cybersecurity Pro</h3>
-                    <p class="text-gray-500 text-sm mb-6 flex-grow">Advanced analysis of logs, SQL injection, and intrusion detection systems.</p>
-                    
-                    <div class="mt-auto pt-4 border-t border-gray-800 flex justify-between items-center text-xs font-mono">
-                        <span class="text-gray-600">ID: GOOG-112</span>
-                        <span class="text-[#00FF41] opacity-0 group-hover:opacity-100 transition-opacity">VIEW_PROOF ></span>
+                <div class="holo-card p-1 min-h-[350px] flex flex-col group cursor-crosshair relative overflow-hidden" 
+                     onmousemove="tiltCard(event, this)" onmouseleave="resetCard(this)"
+                     style="--theme: var(--neon-red);">
+
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#ff003c]/10 to-transparent h-[20%] w-full animate-[internal-scan_5s_linear_infinite] pointer-events-none z-20"></div>
+
+                    <div class="bg-black/80 h-full p-8 flex flex-col relative z-10 border border-[#ff003c]/20 group-hover:border-[#ff003c] transition-colors">
+                        
+                        <div class="absolute inset-0 opacity-10 pointer-events-none text-[8px] font-mono leading-none overflow-hidden text-[#ff003c]" style="mask-image: linear-gradient(to bottom, transparent, black);">
+                            FF 00 3C DE AD BE EF FF 00 3C DE AD BE EF
+                            FF 00 3C DE AD BE EF FF 00 3C DE AD BE EF
+                        </div>
+
+                        <svg class="watermark text-[#ff003c]" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1">
+                            <path d="M20 20 L80 80 M80 20 L20 80" stroke-width="2"/>
+                            <path d="M10 10 H30 M10 10 V30" stroke-width="2"/>
+                            <path d="M90 10 H70 M90 10 V30" stroke-width="2"/>
+                            <path d="M10 90 H30 M10 90 V70" stroke-width="2"/>
+                            <path d="M90 90 H70 M90 90 V70" stroke-width="2"/>
+                            <rect x="45" y="45" width="10" height="10" fill="currentColor" opacity="0.5"/>
+                        </svg>
+                        
+                        <div class="flex justify-between items-start mb-6 relative z-30">
+                            <div class="w-12 h-12 border border-[#ff003c] flex items-center justify-center bg-[#ff003c]/10 backdrop-blur-sm">
+                                <svg class="w-6 h-6 text-[#ff003c]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <div class="verified-badge text-[#ff003c] border border-[#ff003c] px-2 py-1 bg-black/50 text-[10px]">BLACK_OPS</div>
+                        </div>
+
+                        <div class="text-[#ff003c] text-[10px] font-bold tracking-[0.2em] mb-1 opacity-80 font-mono">RED_CELL // EXPLOITATION</div>
+                        <h2 class="text-3xl text-white font-black leading-none mb-4 group-hover:text-[#ff003c] transition-colors uppercase tracking-tighter drop-shadow-[0_0_5px_rgba(0,0,0,0.8)] cyber-font">
+                            OFFENSIVE<br>OPERATOR
+                        </h2>
+                        
+                        <p class="text-gray-400 text-xs leading-relaxed mb-8 flex-grow border-l-2 border-[#ff003c]/30 pl-3 relative z-30 font-mono">
+                            Authorized for active intrusion. Black-box penetration testing, network pivoting, and privilege escalation.
+                        </p>
+
+                        <div class="mt-auto border-t border-dashed border-gray-800 pt-4 flex justify-between items-end relative z-30">
+                            <div class="text-[#ff003c] barcode opacity-80">ASSAULT</div>
+                            <div class="text-[10px] text-gray-500 font-mono text-right">
+                                RANK: OPERATOR<br>
+                                AUTH: eJPTv2
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+                <div class="holo-card p-1 min-h-[350px] flex flex-col group cursor-crosshair relative overflow-hidden" 
+                     onmousemove="tiltCard(event, this)" onmouseleave="resetCard(this)"
+                     style="--theme: var(--neon-green);">
+
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#00FF41]/10 to-transparent h-[20%] w-full animate-[internal-scan_6s_linear_infinite] pointer-events-none z-20"></div>
+
+                    <div class="bg-black/80 h-full p-8 flex flex-col relative z-10 border border-[#00FF41]/20 group-hover:border-[#00FF41] transition-colors">
+                        
+                         <div class="absolute inset-0 opacity-10 pointer-events-none text-[8px] font-mono leading-none overflow-hidden text-[#00FF41]" style="mask-image: linear-gradient(to bottom, transparent, black);">
+                            00 11 00 11 00 11 00 11 00 11 00 11 00 11
+                            00 11 00 11 00 11 00 11 00 11 00 11 00 11
+                        </div>
+
+                        <svg class="watermark text-[#00FF41]" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="1">
+                            <circle cx="50" cy="50" r="40" stroke-dasharray="10,5"/>
+                            <circle cx="50" cy="50" r="25"/>
+                            <circle cx="50" cy="50" r="10" fill="currentColor" opacity="0.3"/>
+                            <path d="M50 50 L90 50" stroke-width="2">
+                                <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="4s" repeatCount="indefinite"/>
+                            </path>
+                            <circle cx="70" cy="30" r="2" fill="currentColor">
+                                <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                        </svg>
+                        
+                        <div class="flex justify-between items-start mb-6 relative z-30">
+                            <div class="w-12 h-12 border border-[#00FF41] flex items-center justify-center bg-[#00FF41]/10 backdrop-blur-sm">
+                                <svg class="w-6 h-6 text-[#00FF41]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                            </div>
+                            <div class="verified-badge text-[#00FF41] border border-[#00FF41] px-2 py-1 bg-black/50 text-[10px]">DATA_MINER</div>
+                        </div>
+
+                        <div class="text-[#00FF41] text-[10px] font-bold tracking-[0.2em] mb-1 opacity-80 font-mono">THREAT // INTELLIGENCE</div>
+                        <h2 class="text-3xl text-white font-black leading-none mb-4 group-hover:text-[#00FF41] transition-colors uppercase tracking-tighter drop-shadow-[0_0_5px_rgba(0,0,0,0.8)] cyber-font">
+                            THREAT<br>HUNTER
+                        </h2>
+                        
+                        <p class="text-gray-400 text-xs leading-relaxed mb-8 flex-grow border-l-2 border-[#00FF41]/30 pl-3 relative z-30 font-mono">
+                            Algorithmic anomaly detection. SIEM log analysis, digital forensics, and proactive threat neutralization.
+                        </p>
+
+                        <div class="mt-auto border-t border-dashed border-gray-800 pt-4 flex justify-between items-end relative z-30">
+                            <div class="text-[#00FF41] barcode opacity-80">INTEL_OPS</div>
+                            <div class="text-[10px] text-gray-500 font-mono text-right">
+                                RANK: HUNTER<br>
+                                AUTH: G-CYBER
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-
     </div>
-    
-    <div class="scanline"></div>
+
+    <script src="bg.js"></script>
+    <script>
+        const _0x343601=_0x5823;(function(_0x52f2ee,_0x459dfc){const _0x5d998b=_0x5823,_0x41d7b4=_0x52f2ee();while(!![]){try{const _0x53999d=-parseInt(_0x5d998b(0xae))/0x1*(parseInt(_0x5d998b(0xcd))/0x2)+-parseInt(_0x5d998b(0xc2))/0x3+-parseInt(_0x5d998b(0xdd))/0x4*(-parseInt(_0x5d998b(0xda))/0x5)+-parseInt(_0x5d998b(0xbe))/0x6+parseInt(_0x5d998b(0xea))/0x7+-parseInt(_0x5d998b(0xe0))/0x8+parseInt(_0x5d998b(0xe4))/0x9;if(_0x53999d===_0x459dfc)break;else _0x41d7b4['push'](_0x41d7b4['shift']());}catch(_0x447102){_0x41d7b4['push'](_0x41d7b4['shift']());}}}(_0x51fd,0x918e7));function _0x5823(_0x1a80b8,_0x1007ed){_0x1a80b8=_0x1a80b8-0xab;const _0x51fde0=_0x51fd();let _0x58234c=_0x51fde0[_0x1a80b8];return _0x58234c;}function tiltCard(_0x28b72f,_0x32c98d){const _0x2ec445=_0x5823,_0x3430bb=_0x32c98d[_0x2ec445(0xbc)](),_0x4a7c43=_0x28b72f[_0x2ec445(0xb6)]-_0x3430bb[_0x2ec445(0xc7)],_0x5c526d=_0x28b72f[_0x2ec445(0xc9)]-_0x3430bb[_0x2ec445(0xac)],_0x3d8238=_0x3430bb[_0x2ec445(0xe9)]/0x2,_0x28a266=_0x3430bb['height']/0x2,_0x216d1b=(_0x5c526d-_0x28a266)/_0x28a266*-0x5,_0x34596e=(_0x4a7c43-_0x3d8238)/_0x3d8238*0x5;_0x32c98d['style'][_0x2ec445(0xdf)]=_0x2ec445(0xd6)+_0x216d1b+_0x2ec445(0xb0)+_0x34596e+_0x2ec445(0xbb);const _0x27db20=(_0x4a7c43-_0x3d8238)/0xa,_0x452050=(_0x5c526d-_0x28a266)/0xa;_0x32c98d[_0x2ec445(0xc6)][_0x2ec445(0xd5)]=-_0x27db20+_0x2ec445(0xe6)+-_0x452050+'px\x2030px\x20rgba(0,0,0,0.5)';}function resetCard(_0x2888af){const _0x1022d6=_0x5823;_0x2888af[_0x1022d6(0xc6)]['transform']=_0x1022d6(0xd7),_0x2888af['style'][_0x1022d6(0xd5)]='none';}const lockdownUI=document[_0x343601(0xc1)](_0x343601(0xcb));lockdownUI['id']=_0x343601(0xde),lockdownUI['style'][_0x343601(0xb1)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x20top:\x200;\x20left:\x200;\x20width:\x20100vw;\x20height:\x20100vh;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20#000;\x20z-index:\x2099999;\x20display:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20flex-direction:\x20column;\x20justify-content:\x20center;\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20font-family:\x20\x27Fira\x20Code\x27,\x20monospace;\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x2020px\x20solid\x20#000;\x0a\x20\x20\x20\x20\x20\x20\x20\x20',lockdownUI['innerHTML']=_0x343601(0xbd),document[_0x343601(0xc4)][_0x343601(0xe3)](lockdownUI),document[_0x343601(0xd8)](_0x343601(0xd3),_0x328c8b=>{const _0x11885d=_0x343601;_0x328c8b[_0x11885d(0xab)]();const _0x1315cd=document[_0x11885d(0xd0)](_0x11885d(0xde)),_0x29648a=document[_0x11885d(0xd0)](_0x11885d(0xdb));_0x1315cd['style'][_0x11885d(0xca)]=_0x11885d(0xd9),_0x29648a[_0x11885d(0xd1)]=_0x11885d(0xdc)+Math[_0x11885d(0xe8)](Math['random']()*0x3e7)+_0x11885d(0xe5)+Math[_0x11885d(0xce)]()[_0x11885d(0xeb)](0x24)['substring'](0x7)['toUpperCase']()+_0x11885d(0xc8);const _0xf6fc56=new(window['AudioContext']||window[(_0x11885d(0xb2))])();if(_0xf6fc56[_0x11885d(0xb7)]===_0x11885d(0xe7))_0xf6fc56[_0x11885d(0xe1)]();const _0x5f1959=_0xf6fc56[_0x11885d(0xd4)](),_0x4571af=_0xf6fc56['createGain']();_0x5f1959[_0x11885d(0xcf)]=_0x11885d(0xc5),_0x5f1959[_0x11885d(0xb4)]['setValueAtTime'](0x96,_0xf6fc56[_0x11885d(0xad)]),_0x5f1959[_0x11885d(0xb4)][_0x11885d(0xaf)](0x28,_0xf6fc56[_0x11885d(0xad)]+0.5),_0x4571af[_0x11885d(0xd2)][_0x11885d(0xe2)](0.2,_0xf6fc56[_0x11885d(0xad)]),_0x4571af['gain'][_0x11885d(0xaf)](0.01,_0xf6fc56[_0x11885d(0xad)]+0.5),_0x5f1959[_0x11885d(0xc0)](_0x4571af),_0x4571af[_0x11885d(0xc0)](_0xf6fc56[_0x11885d(0xc3)]),_0x5f1959[_0x11885d(0xba)](),_0x5f1959['stop'](_0xf6fc56[_0x11885d(0xad)]+0.5),setTimeout(()=>{const _0x180f5d=_0x11885d;_0x1315cd[_0x180f5d(0xc6)]['display']=_0x180f5d(0xb9);},0x7d0);}),document[_0x343601(0xbf)]=function(_0x55b3b2){const _0x26ef66=_0x343601;if(_0x55b3b2[_0x26ef66(0xb8)]==0x7b)return![];if(_0x55b3b2[_0x26ef66(0xb5)]&&_0x55b3b2[_0x26ef66(0xb3)]&&(_0x55b3b2[_0x26ef66(0xb8)]==0x49||_0x55b3b2[_0x26ef66(0xb8)]==0x4a||_0x55b3b2[_0x26ef66(0xb8)]==0x43))return![];if(_0x55b3b2[_0x26ef66(0xb5)]&&_0x55b3b2[_0x26ef66(0xb8)]==0x55)return![];if(_0x55b3b2[_0x26ef66(0xb8)]==0x74)return _0x55b3b2['preventDefault'](),alert(_0x26ef66(0xcc)),![];if(_0x55b3b2[_0x26ef66(0xb5)]&&_0x55b3b2[_0x26ef66(0xb8)]==0x52)return _0x55b3b2[_0x26ef66(0xab)](),alert(_0x26ef66(0xcc)),![];};function _0x51fd(){const _0x362e54=['addEventListener','flex','2445QjOWcl','lockdown-logs','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20>\x20INTERCEPTING_REQUEST...\x20[DONE]<br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20>\x20TRACING_ROUTE...\x20[','7116RhPbOy','darknet-lockdown','transform','7274888eGHfzi','resume','setValueAtTime','appendChild','10331667dAFsvH','ms]<br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20>\x20FLAGGING_SESSION_ID:\x20','px\x20','suspended','floor','width','6016017cmyDwB','toString','preventDefault','top','currentTime','3347sRWnNf','exponentialRampToValueAtTime','deg)\x20rotateY(','cssText','webkitAudioContext','shiftKey','frequency','ctrlKey','clientX','state','keyCode','none','start','deg)\x20scale(1.02)','getBoundingClientRect','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<style>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.terminal-box\x20{\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x2080%;\x20max-width:\x20600px;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x201px\x20solid\x20#ff003c;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2020px;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(10,\x200,\x200,\x200.95);\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x200\x2030px\x20rgba(255,\x200,\x2060,\x200.2);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20relative;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.terminal-header\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-bottom:\x201px\x20solid\x20#ff003c;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20margin-bottom:\x2015px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding-bottom:\x205px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x20justify-content:\x20space-between;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ff003c;\x20font-size:\x200.8rem;\x20letter-spacing:\x202px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.alert-text\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ff003c;\x20font-size:\x202rem;\x20font-weight:\x20bold;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-align:\x20center;\x20margin:\x2020px\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-shadow:\x200\x200\x2010px\x20#ff003c;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20animation:\x20glitch-text\x200.3s\x20infinite;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.log-stream\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#555;\x20font-size:\x200.7rem;\x20height:\x20100px;\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-left:\x202px\x20solid\x20#ff003c;\x20padding-left:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x20flex-direction:\x20column;\x20justify-content:\x20flex-end;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.scan-line-alert\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20absolute;\x20top:\x200;\x20left:\x200;\x20width:\x20100%;\x20height:\x205px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x200,\x2060,\x200.3);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20animation:\x20scan-down\x201.5s\x20linear\x20infinite;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20pointer-events:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20@keyframes\x20glitch-text\x20{\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x200%\x20{\x20transform:\x20translate(0);\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2020%\x20{\x20transform:\x20translate(-2px,\x202px);\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2040%\x20{\x20transform:\x20translate(-2px,\x20-2px);\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2060%\x20{\x20transform:\x20translate(2px,\x202px);\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2080%\x20{\x20transform:\x20translate(2px,\x20-2px);\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20100%\x20{\x20transform:\x20translate(0);\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20@keyframes\x20scan-down\x20{\x200%\x20{\x20top:\x20-10%;\x20}\x20100%\x20{\x20top:\x20110%;\x20}\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</style>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22terminal-box\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22scan-line-alert\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22terminal-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>>>\x20ROOT_OVERRIDE</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22animate-pulse\x22>🔴\x20LIVE</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22alert-text\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20⚠\x20ILLEGAL_OPERATION\x20⚠\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22log-stream\x22\x20id=\x22lockdown-logs\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-top:\x2020px;\x20text-align:\x20center;\x20color:\x20white;\x20font-size:\x200.8rem;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Right-Click\x20is\x20<span\x20style=\x22color:\x20#ff003c\x22>FORBIDDEN</span>\x20on\x20this\x20node.\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','4778778nQozVH','onkeydown','connect','createElement','300084ryGwFJ','destination','body','square','style','left','<br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22color:\x20#ff003c\x22>>\x20PROTOCOL_VIOLATION_DETECTED</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','clientY','display','div','⚠️\x20SYSTEM_ALERT:\x20REFRESH_DISABLED\x20//\x20SESSION_LOCKED','284uLjDGr','random','type','getElementById','innerHTML','gain','contextmenu','createOscillator','boxShadow','perspective(1000px)\x20rotateX(','perspective(1000px)\x20rotateX(0)\x20rotateY(0)\x20scale(1)'];_0x51fd=function(){return _0x362e54;};return _0x51fd();}
+    </script>
 </body>
 </html>

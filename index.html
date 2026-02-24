@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="shadowborne-checkin" content="2026-02-25">
     <title>ShadowBorne // Darkweb_Node</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <meta name="access-token" content="z$KS9#phQ2!dmR5w*vTb8&xrB1n">
@@ -344,67 +345,75 @@
             </div>
         </section>
 
-        <section id="console" class="mb-32 relative z-10">
+ <section id="console" class="mb-32 relative z-10">
             <div class="max-w-4xl mx-auto">
-                <div
-                    class="bg-[#050505] border border-[#333] rounded-sm shadow-[0_0_50px_rgba(0,243,255,0.15)] relative overflow-hidden group">
+                <div class="bg-[#050505] border border-[#ff003c]/30 rounded-sm shadow-[0_0_40px_rgba(255,0,60,0.1)] relative overflow-hidden group transition-all duration-500 hover:shadow-[0_0_60px_rgba(255,0,60,0.2)]">
 
-                    <div class="bg-[#0a0a0a] px-4 py-2 flex justify-between items-center border-b border-[#222]">
+                    <div class="bg-[#0a0a0a] px-4 py-2 flex justify-between items-center border-b border-[#ff003c]/30">
                         <div class="flex gap-4 items-center">
                             <div class="flex gap-2">
-                                <div class="w-2.5 h-2.5 rounded-full bg-[#ff003c] shadow-[0_0_8px_#ff003c]"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-[#fbbf24] opacity-50"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-[#00FF41] opacity-50"></div>
+                                <div class="w-2.5 h-2.5 bg-[#ff003c] shadow-[0_0_8px_#ff003c] animate-pulse"></div>
+                                <div class="w-2.5 h-2.5 bg-[#fbbf24] opacity-50"></div>
+                                <div class="w-2.5 h-2.5 bg-[#00f3ff] opacity-50"></div>
                             </div>
-                            <div class="mono text-[10px] text-[#00f3ff]/70 tracking-widest">
-                                ROOT@SHADOWBORNE-NODE:~ (TOR_V3)
+                            <div class="font-mono text-[10px] text-[#ff003c] tracking-widest font-bold">
+                                SHADOWBORNE_TERMINAL // V9.0
                             </div>
                         </div>
-                        <div class="mono text-[10px] text-[#333]">UPTIME: <span id="uptime-counter">99.9%</span>
+                        <div class="font-mono text-[10px] text-[#00f3ff]">
+                            UPLINK: <span class="text-[#00FF41]">SECURE</span>
                         </div>
                     </div>
 
-                    <div id="terminal-window"
-                        class="p-6 h-[450px] overflow-y-auto mono text-sm space-y-1 font-light text-gray-400 scrollbar-hide bg-black/95 relative">
-
-                        <div id="terminal-sticky-header"
-                            class="mb-6 pb-4 border-b border-dashed border-gray-800 select-none">
-
-                            <div class="font-bold leading-[1.1] mb-4 text-[10px] md:text-xs whitespace-pre">
-                                <span class="text-gray-600"> . .</span>
-                                <span class="text-gray-600"> /' \ / `\</span>
-                                <span class="text-gray-600"> / | .---. | \</span>
-                                <span class="text-gray-600"> | |/ </span><span class="text-[#ff003c]"> _ _ </span><span
-                                    class="text-gray-600"> \| |</span> <span class="text-[#00f3ff] font-bold">::
-                                    SHADOW_OS_KERNEL ::</span>
-                                <span class="text-gray-600"> | |\ </span><span class="text-[#ff003c]"> __ </span><span
-                                    class="text-gray-600"> /| |</span> <span class="text-gray-500">v9.0.4-nightly
-                                    [unstable]</span>
-                                <span class="text-gray-600"> \ | </span><span class="text-[#00f3ff]">'---'</span><span
-                                    class="text-gray-600"> | /</span>
-                                <span class="text-gray-600"> \./ \./</span> <span
-                                    class="text-[#ff003c] animate-pulse">WARNING: ROOT ACCESS DETECTED</span>
-                                <span class="text-gray-600"> | |</span>
-                                <span class="text-gray-600"> | |</span>
-                            </div>
-
-                            <div
-                                class="flex flex-col md:flex-row md:justify-between gap-2 border-l-2 border-[#ff003c] pl-3">
-                                <div class="text-xs">
-                                    <div class="mb-1">
-                                        <span class="text-[#00f3ff]">NET_STATUS:</span>
-                                        <span class="text-white">ONION_ROUTER_V3</span>
-                                        <span class="text-green-500">[SECURE]</span>
-                                    </div>
-                                    <div>
-                                        <span class="text-[#00f3ff]">ENCRYPTION:</span>
-                                        <span class="text-white">AES-256-GCM</span>
+                    <div id="terminal-window" class="px-6 pb-6 pt-0 h-[450px] overflow-y-auto font-mono text-sm space-y-1 font-light text-gray-400 scrollbar-hide bg-[#020202] relative">
+                        
+                        <div id="terminal-sticky-header" class="sticky top-0 z-50 bg-[#020202]/95 backdrop-blur-md mb-6 pb-4 pt-6 border-b border-dashed border-[#ff003c]/40 select-none shadow-[0_15px_15px_-10px_rgba(0,0,0,0.8)]">
+                            
+                            <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-4">
+                                <div class="relative w-24 h-24 shrink-0 flex items-center justify-center">
+                                    <svg class="absolute inset-0 w-full h-full" style="animation: spin 12s linear infinite;" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="45" fill="none" stroke="#ff003c" stroke-width="1.5" stroke-dasharray="10 5 2 5 20 10" opacity="0.8"></circle>
+                                        <circle cx="50" cy="50" r="40" fill="none" stroke="#00f3ff" stroke-width="0.5" stroke-dasharray="5 15" opacity="0.4"></circle>
+                                    </svg>
+                                    <svg class="absolute inset-0 w-full h-full" style="animation: spin 8s linear infinite reverse;" viewBox="0 0 100 100">
+                                        <circle cx="50" cy="50" r="30" fill="none" stroke="#00FF41" stroke-width="1.5" stroke-dasharray="20 10 5 10 2 5" opacity="0.6"></circle>
+                                        <polygon points="50,15 55,25 45,25" fill="#00f3ff" opacity="0.5"></polygon>
+                                        <polygon points="50,85 55,75 45,75" fill="#00f3ff" opacity="0.5"></polygon>
+                                    </svg>
+                                    <div class="w-3 h-3 bg-[#ff003c] rounded-full shadow-[0_0_15px_#ff003c] animate-pulse"></div>
+                                    <div class="absolute inset-0 w-full h-full pointer-events-none">
+                                        <div class="absolute top-0 bottom-0 left-1/2 w-px bg-[#00f3ff]/30"></div>
+                                        <div class="absolute left-0 right-0 top-1/2 h-px bg-[#00f3ff]/30"></div>
                                     </div>
                                 </div>
 
-                                <div class="text-[10px] text-gray-500 self-end font-mono text-right opacity-70">
+                                <div class="flex-grow text-center sm:text-left">
+                                    <h2 class="text-[#ff003c] text-2xl md:text-3xl font-black tracking-[0.2em] drop-shadow-[0_0_8px_rgba(255,0,60,0.8)] font-['Rajdhani'] uppercase m-0 leading-none">SHADOW_OS</h2>
+                                    <div class="text-[#00f3ff] text-xs font-bold tracking-widest mt-1 uppercase">Surveillance_Kernel_v9.0.4</div>
+                                    <div class="text-gray-500 text-[10px] mt-3 flex flex-wrap justify-center sm:justify-start gap-3">
+                                        <span class="animate-pulse text-[#ff003c]">WARNING: RESTRICTED ZONE</span>
+                                        <span class="hidden sm:inline">|</span>
+                                        <span>NODE_ID: 0x7A9F</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col md:flex-row md:justify-between gap-2 border-l-2 border-[#00f3ff] pl-3 bg-[#0a0a0a]/50 py-2 mt-2">
+                                <div class="text-xs">
+                                    <div class="mb-1">
+                                        <span class="text-[#00f3ff]">AUTH_STATE:</span> 
+                                        <span class="text-yellow-500 font-bold transition-colors duration-500" id="auth-state-display">[ GUEST_MODE ]</span>
+                                        <span class="text-gray-500 ml-2 hidden sm:inline" id="auth-hint">Run 'sudo' to elevate.</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-[#00f3ff]">ENCRYPTION:</span> 
+                                        <span class="text-white">AES-256-GCM (MIL-SPEC)</span>
+                                    </div>
+                                </div>
+
+                                <div class="text-[10px] text-[#00FF41] self-end font-mono text-right opacity-80 drop-shadow-[0_0_2px_#00FF41]">
                                     <div>MEM_ALLOC: 64TB</div>
-                                    <div>CPU_LOAD: 12%</div>
+                                    <div>CPU_LOAD: <span id="cpu-load-display" class="animate-pulse text-[#ff003c]">12%</span></div>
                                 </div>
                             </div>
                         </div>
@@ -412,31 +421,21 @@
                         <div id="terminal-output"></div>
                     </div>
 
-                    <div
-                        class="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] z-20 opacity-20">
-                    </div>
+                    <div class="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] z-20 opacity-20"></div>
 
-                    <div class="p-4 bg-[#080808] border-t border-[#222] flex items-center relative z-30">
-                        <span class="text-[#00f3ff] mr-3 font-bold text-xs">root@shadowborne:~$</span>
+                    <div class="p-4 bg-[#050505] border-t border-[#ff003c]/30 flex items-center relative z-30 shadow-[0_-5px_20px_rgba(0,0,0,0.8)]">
+                        <span id="terminal-prompt-label" class="text-[#00f3ff] mr-3 font-bold text-xs select-none">guest@shadowborne:~$</span>
                         <input type="text" id="terminal-input"
-                            class="w-full bg-transparent outline-none border-none text-[#00FF41] mono placeholder-gray-800 text-sm"
+                            class="w-full bg-transparent outline-none border-none text-[#00FF41] font-mono placeholder-gray-800 text-sm"
                             placeholder="Type 'help' to initialize protocols..." autocomplete="off" spellcheck="false">
-                        <div class="absolute right-4 text-[10px] text-gray-600 mono hidden md:block">ENCRYPTED //
-                            AES-256</div>
+                        <div class="absolute right-4 text-[10px] text-[#ff003c] font-mono hidden md:block animate-pulse font-bold tracking-widest drop-shadow-[0_0_5px_#ff003c]">
+                            [ REC ]
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="mb-40 relative z-10 border-t border-white/5 pt-20">
-            <div class="flex items-center gap-4 mb-16">
-                <div class="h-px bg-[#ff003c] w-12"></div>
-                <h2 class="text-3xl font-black text-white tracking-tighter cyber-font">
-                    <span class="text-[#00f3ff]">SECURE</span>_UPLINK
-                </h2>
-                <div class="h-px bg-gray-800 flex-grow"></div>
-                <div class="text-[#ff003c] text-xs mono animate-pulse">ENCRYPTION: ENABLED</div>
-            </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
 
@@ -544,99 +543,99 @@
         </section>
     </main>
 
-    <footer class="border-t border-[#ff003c]/20 bg-[#020202] relative z-10 pt-16 overflow-hidden">
+    <footer class="border-t border-[#ff003c]/30 bg-[#020202] relative z-10 pt-16 overflow-hidden shadow-[0_-10px_40px_rgba(255,0,60,0.05)]">
 
     <div class="absolute inset-0 bg-[linear-gradient(rgba(20,20,20,0.5)_1px,transparent_1px),linear-gradient(90deg,rgba(20,20,20,0.5)_1px,transparent_1px)] bg-[size:40px_40px] opacity-20 pointer-events-none"></div>
+    
+    <div class="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(0,243,255,0)_0%,rgba(0,243,255,0.03)_50%,rgba(0,243,255,0)_100%)] bg-[length:100%_200%] animate-[scan-down_4s_linear_infinite] opacity-50 z-0"></div>
 
     <div class="container-wide px-6 relative z-10 mb-12">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
 
             <div class="md:col-span-1 space-y-4">
-                <div class="flex items-center gap-2 mb-2">
-                    <div class="w-2 h-2 bg-[#ff003c] animate-pulse"></div>
-                    <span class="cyber-font text-white tracking-widest text-sm font-bold">SHADOW_BORNE</span>
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-2.5 h-2.5 bg-[#ff003c] rounded-sm shadow-[0_0_10px_#ff003c] animate-pulse"></div>
+                    <span class="cyber-font text-white tracking-[0.2em] text-sm font-black drop-shadow-[0_0_5px_rgba(255,255,255,0.3)]">SHADOW_BORNE</span>
                 </div>
-                <p class="mono text-[10px] text-gray-500 leading-relaxed">
+                <p class="mono text-[10px] text-gray-500 leading-relaxed border-l border-[#ff003c]/30 pl-3">
                     A digital anomaly operating in the null space between signal and noise.
                     <br><br>
-                    <span class="text-[#ff003c]">> SYSTEM_STATUS:</span> COMPROMISED
+                    <span class="text-[#ff003c] font-bold drop-shadow-[0_0_2px_#ff003c]">> SYSTEM_STATUS:</span> <span class="text-white">COMPROMISED</span>
                     <br>
-                    <span class="text-[#00f3ff]">> NODE_LOCATION:</span> [REDACTED]
+                    <span class="text-[#00f3ff] font-bold drop-shadow-[0_0_2px_#00f3ff]">> NODE_LOCATION:</span> <span class="text-white bg-white/10 px-1">[REDACTED]</span>
                 </p>
             </div>
 
             <div class="md:col-span-1 space-y-2">
-                <h4 class="mono text-xs text-white font-bold mb-4 border-b border-gray-800 pb-2 inline-block">
+                <h4 class="mono text-xs text-white font-bold mb-4 border-b border-[#00f3ff]/40 pb-2 inline-block drop-shadow-[0_0_5px_rgba(0,243,255,0.5)]">
                     NETWORK_TELEMETRY
                 </h4>
-                <div class="space-y-3 mono text-[10px]">
+                <div class="space-y-4 mono text-[10px] bg-black/40 p-3 border border-gray-900 border-l-2 border-l-[#00f3ff]/50 rounded-sm">
                     <div class="group">
                         <div class="flex justify-between text-gray-500 mb-1">
                             <span>UPTIME</span>
-                            <span class="text-[#00FF41]">99.9%</span>
+                            <span class="text-[#00FF41] font-bold">99.9%</span>
                         </div>
-                        <div class="h-1 w-full bg-gray-900 rounded-full overflow-hidden">
-                            <div class="h-full bg-[#00FF41] w-[99%] shadow-[0_0_5px_#00FF41]"></div>
+                        <div class="h-1.5 w-full bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                            <div class="h-full bg-[#00FF41] w-[99%] shadow-[0_0_8px_#00FF41]"></div>
                         </div>
                     </div>
                     
                     <div class="group">
                         <div class="flex justify-between text-gray-500 mb-1">
                             <span>LATENCY</span>
-                            <span class="text-[#00f3ff]">12ms</span>
+                            <span class="text-[#00f3ff] animate-pulse font-bold">12ms</span>
                         </div>
-                        <div class="h-1 w-full bg-gray-900 rounded-full overflow-hidden">
-                            <div class="h-full bg-[#00f3ff] w-[15%] animate-pulse"></div>
+                        <div class="h-1.5 w-full bg-gray-900 rounded-full overflow-hidden border border-gray-800">
+                            <div class="h-full bg-[#00f3ff] w-[15%] shadow-[0_0_8px_#00f3ff] animate-pulse"></div>
                         </div>
                     </div>
 
-                    <div class="flex justify-between items-center pt-1">
+                    <div class="flex justify-between items-center pt-2">
                         <span class="text-gray-600">ENCRYPTION:</span>
-                        <span class="text-gray-400 border border-gray-800 px-1">AES-256</span>
+                        <span class="text-[#00f3ff] border border-[#00f3ff]/40 bg-[#00f3ff]/10 px-1.5 py-0.5 shadow-[0_0_5px_rgba(0,243,255,0.2)]">AES-256</span>
                     </div>
                 </div>
             </div>
 
-            <div class="md:col-span-1">
-                <h4 class="mono text-xs text-white font-bold mb-4 border-b border-gray-800 pb-2 inline-block">
+            <div class="md:col-span-1 pl-0 md:pl-4">
+                <h4 class="mono text-xs text-white font-bold mb-4 border-b border-[#00FF41]/40 pb-2 inline-block drop-shadow-[0_0_5px_rgba(0,255,65,0.5)]">
                     DIRECT_ACCESS
                 </h4>
-                <ul class="space-y-2 mono text-[10px]">
-                    <li><a href="#profile" class="text-gray-500 hover:text-[#00f3ff] hover:pl-2 transition-all duration-300 group">
-                        <span class="text-[#00f3ff] opacity-0 group-hover:opacity-100 transition-opacity">></span> IDENTITY_MATRIX
+                <ul class="space-y-3 mono text-[10px]">
+                    <li><a href="#profile" class="text-gray-500 hover:text-[#00f3ff] hover:pl-2 transition-all duration-300 group flex items-center gap-2">
+                        <span class="text-[#00f3ff] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all font-bold">></span> IDENTITY_MATRIX
                     </a></li>
-                    <li><a href="#toolbox" class="text-gray-500 hover:text-[#ff003c] hover:pl-2 transition-all duration-300 group">
-                        <span class="text-[#ff003c] opacity-0 group-hover:opacity-100 transition-opacity">></span> WEAPON_ARSENAL
+                    <li><a href="#toolbox" class="text-gray-500 hover:text-[#ff003c] hover:pl-2 transition-all duration-300 group flex items-center gap-2">
+                        <span class="text-[#ff003c] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all font-bold">></span> WEAPON_ARSENAL
                     </a></li>
-                    <li><a href="#console" class="text-gray-500 hover:text-[#00FF41] hover:pl-2 transition-all duration-300 group">
-                        <span class="text-[#00FF41] opacity-0 group-hover:opacity-100 transition-opacity">></span> ROOT_TERMINAL
+                    <li><a href="#console" class="text-gray-500 hover:text-[#00FF41] hover:pl-2 transition-all duration-300 group flex items-center gap-2">
+                        <span class="text-[#00FF41] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all font-bold">></span> ROOT_TERMINAL
                     </a></li>
-                    <li><a href="#contact" class="text-gray-500 hover:text-[#fbbf24] hover:pl-2 transition-all duration-300 group">
-                        <span class="text-[#fbbf24] opacity-0 group-hover:opacity-100 transition-opacity">></span> SECURE_UPLINK
+                    <li><a href="#contact" class="text-gray-500 hover:text-[#fbbf24] hover:pl-2 transition-all duration-300 group flex items-center gap-2">
+                        <span class="text-[#fbbf24] opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all font-bold">></span> SECURE_UPLINK
                     </a></li>
                 </ul>
             </div>
 
             <div class="md:col-span-1 flex flex-col gap-6">
                 <div>
-                    <h4 class="mono text-xs text-white font-bold mb-4 border-b border-gray-800 pb-2 inline-block">
+                    <h4 class="mono text-xs text-white font-bold mb-4 border-b border-gray-600 pb-2 inline-block">
                         PGP_FINGERPRINT
                     </h4>
-                    <div class="bg-black/50 border border-gray-800 p-2 font-mono text-[9px] text-gray-500 break-all leading-tight hover:border-[#00f3ff] hover:text-[#00f3ff] transition-colors cursor-help" title="Verify Integrity">
+                    <div class="bg-[#050505] border border-gray-800 border-l-2 border-l-gray-500 p-3 font-mono text-[9px] text-gray-500 break-all leading-relaxed hover:border-[#00f3ff] hover:border-l-[#00f3ff] hover:text-white hover:shadow-[0_0_20px_rgba(0,243,255,0.15)] transition-all duration-300 cursor-help group" title="Verify Integrity">
                         89A2 34F1 90B2 78C3 12D4 <br>
                         56E5 90F6 12A7 34B8 56C9 <br>
-                        <span class="text-[#00f3ff] mt-2 block">[VERIFIED_SIGNATURE]</span>
+                        <span class="text-gray-600 mt-2 block group-hover:text-[#00f3ff] group-hover:drop-shadow-[0_0_5px_#00f3ff] transition-colors">[VERIFIED_SIGNATURE]</span>
                     </div>
                 </div>
 
                 <div id="dead-switch-panel" class="border border-red-900/50 bg-black/80 p-3 font-mono text-xs relative overflow-hidden group hidden">
                     <div class="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(255,0,60,0.1)_50%)] bg-[length:100%_4px] pointer-events-none"></div>
-                    
                     <div class="flex items-center justify-between mb-2 border-b border-red-900/50 pb-1 relative z-10">
                         <span class="text-[#ff003c] font-bold tracking-widest text-[10px]">DEAD_SWITCH</span>
                         <div class="w-1.5 h-1.5 rounded-full bg-[#ff003c] animate-pulse"></div>
                     </div>
-                    
                     <div class="space-y-1 text-gray-500 relative z-10 text-[9px]">
                         <div class="flex justify-between">
                             <span>LAST_SIG:</span>
@@ -653,89 +652,41 @@
         </div>
     </div>
 
-    <div class="w-full bg-[#050505] border-t border-gray-900 py-2">
-        <div class="container-wide px-6 flex flex-col md:flex-row justify-between items-center gap-2 mono text-[9px] text-gray-600 uppercase tracking-widest">
+    <div class="w-full bg-[#050505] border-t border-[#ff003c]/20 py-2.5 shadow-[0_-5px_15px_rgba(0,0,0,0.6)] relative z-20">
+        <div class="container-wide px-6 flex flex-col md:flex-row justify-between items-center gap-3 mono text-[9px] text-gray-500 uppercase tracking-widest">
             
-            <div class="flex items-center gap-6">
-                <span class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+            <div class="flex items-center gap-4">
+                <span class="flex items-center gap-2 text-[#00FF41]">
+                    <span class="w-1.5 h-1.5 bg-[#00FF41] rounded-full shadow-[0_0_8px_#00FF41] animate-pulse"></span>
                     SYSTEM_ONLINE
                 </span>
                 <span class="hidden md:inline text-gray-800">|</span>
                 <span>MEM: 64%</span>
                 <span class="hidden md:inline text-gray-800">|</span>
-                <span>CPU: 12%</span>
+                <span>CPU: <span class="text-[#ff003c]">12%</span></span>
             </div>
 
-            <div class="flex items-center gap-6">
-                <span class="hover:text-[#ff003c] transition-colors cursor-pointer">PRIVACY_POLICY: VOID</span>
+            <div class="flex items-center gap-4">
+                <span id="footer-clock" class="text-[#00f3ff] font-bold drop-shadow-[0_0_3px_#00f3ff]">00:00:00 UTC</span>
                 <span class="hidden md:inline text-gray-800">|</span>
-                <span>SESSION_ID: <span class="text-gray-400">8X92-B7</span></span>
+                <span onclick="alert('ERROR 404: PRIVACY IS AN ILLUSION. YOUR DATA HAS ALREADY BEEN ASSIMILATED INTO SHADOW_OS.')" class="hover:text-[#ff003c] transition-colors cursor-pointer">PRIVACY_POLICY: VOID</span>
+                <span class="hidden md:inline text-gray-800">|</span>
+                <span>SESSION_ID: <span class="text-white">8X92-B7</span></span>
             </div>
             
         </div>
     </div>
 </footer>
 
+<script>
+    const _0x1e1c8b=_0x4680;(function(_0x2ec172,_0x32f82f){const _0x4bd406=_0x4680,_0x4d49e1=_0x2ec172();while(!![]){try{const _0x4bb956=-parseInt(_0x4bd406(0x153))/0x1+parseInt(_0x4bd406(0x176))/0x2*(parseInt(_0x4bd406(0x165))/0x3)+-parseInt(_0x4bd406(0x15a))/0x4+-parseInt(_0x4bd406(0x167))/0x5*(-parseInt(_0x4bd406(0x175))/0x6)+-parseInt(_0x4bd406(0x156))/0x7*(-parseInt(_0x4bd406(0x150))/0x8)+-parseInt(_0x4bd406(0x15b))/0x9*(-parseInt(_0x4bd406(0x178))/0xa)+parseInt(_0x4bd406(0x179))/0xb*(parseInt(_0x4bd406(0x151))/0xc);if(_0x4bb956===_0x32f82f)break;else _0x4d49e1['push'](_0x4d49e1['shift']());}catch(_0x32fdfa){_0x4d49e1['push'](_0x4d49e1['shift']());}}}(_0x2ac9,0xd8003));function updateClock(){const _0x54e193=_0x4680,_0x5c0fc6=new Date(),_0x3343d7=_0x5c0fc6[_0x54e193(0x16e)]()['substring'](0xb,0x13)+'\x20UTC',_0x322e8f=document[_0x54e193(0x177)](_0x54e193(0x157));if(_0x322e8f)_0x322e8f[_0x54e193(0x148)]=_0x3343d7;}function _0x4680(_0x258fd8,_0x124224){_0x258fd8=_0x258fd8-0x13d;const _0x2ac923=_0x2ac9();let _0x46805b=_0x2ac923[_0x258fd8];return _0x46805b;}setInterval(updateClock,0x3e8),updateClock();const lockdownUI=document[_0x1e1c8b(0x13d)](_0x1e1c8b(0x147));function _0x2ac9(){const _0x381049=['start','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20>\x20ISOLATING_INTRUDER...\x20<span\x20style=\x22color:\x20#00FF41;\x22>[DONE]</span><br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20>\x20TARGET_HARDWARE:\x20<span\x20style=\x22color:\x20#00f3ff;\x22>','none','innerHTML','platform','toUpperCase','3075546XYAWxs','8puZGwS','getElementById','90DSNMPk','121HXjiXR','createElement','connect','stop','</span><br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20>\x20TRACING_PACKET_ROUTE...\x20[','destination','UNKNOWN_HARDWARE','frequency','style','color:\x20#ff003c;\x20background:\x20#000;\x20font-size:\x2020px;\x20font-weight:\x20bold;\x20padding:\x2010px;\x20border:\x202px\x20solid\x20red;','shiftKey','div','innerText','onkeydown','clear','ms]<br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20>\x20LOCKING_SESSION_ID:\x20<span\x20style=\x22color:\x20#fbbf24;\x22>','resume','</span><br>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22color:\x20#ff003c;\x20font-weight:900;\x22>>\x20FATAL:\x20PROTOCOL_VIOLATION_LOGGED.</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','substring','lockdown-logs','808jPaxxw','365856XrxSwY','sawtooth','1703973FiBCoA','%c\x20⛔\x20ROOT_ACCESS_DENIED\x20⛔\x20','state','89509mhamPc','footer-clock','type','darknet-lockdown','6494492sYwkZU','1459197AtmnwD','display','keyCode','random','ctrlKey','floor','webkitAudioContext','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<style>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.terminal-box\x20{\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20width:\x2090%;\x20max-width:\x20650px;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border:\x202px\x20solid\x20#ff003c;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20padding:\x2030px;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20#000;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20box-shadow:\x200\x200\x2050px\x20rgba(255,\x200,\x2060,\x200.4);\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20relative;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.terminal-header\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-bottom:\x202px\x20solid\x20#ff003c;\x20margin-bottom:\x2020px;\x20padding-bottom:\x2010px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x20justify-content:\x20space-between;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ff003c;\x20font-size:\x201rem;\x20font-weight:\x20bold;\x20letter-spacing:\x202px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.alert-text\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ff003c;\x20font-size:\x201.8rem;\x20font-weight:\x20bold;\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-align:\x20center;\x20margin:\x2025px\x200;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20text-shadow:\x200\x200\x2010px\x20#ff003c;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20animation:\x20glitch-text\x200.2s\x20infinite;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.log-stream\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20/*\x20ENHANCED\x20TEXT\x20VISIBILITY:\x20White,\x20bold,\x201rem\x20size\x20*/\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20color:\x20#ffffff;\x20font-size:\x201rem;\x20font-weight:\x20bold;\x20height:\x20140px;\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20border-left:\x203px\x20solid\x20#ff003c;\x20padding-left:\x2015px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20display:\x20flex;\x20flex-direction:\x20column;\x20justify-content:\x20flex-end;\x20line-height:\x201.8;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20.scan-line\x20{\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20position:\x20absolute;\x20top:\x200;\x20left:\x200;\x20width:\x20100%;\x20height:\x205px;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(255,\x200,\x2060,\x200.5);\x20box-shadow:\x200\x200\x2010px\x20red;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20animation:\x20scan-down\x202s\x20linear\x20infinite;\x20pointer-events:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20@keyframes\x20glitch-text\x20{\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x200%\x20{\x20transform:\x20translate(0);\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2025%\x20{\x20transform:\x20translate(-2px,\x202px);\x20text-shadow:\x20-2px\x200\x20#00f3ff;\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2050%\x20{\x20transform:\x20translate(2px,\x20-2px);\x20text-shadow:\x202px\x200\x20#00f3ff;\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x2075%\x20{\x20transform:\x20translate(-2px,\x20-2px);\x20text-shadow:\x20-2px\x200\x20#ff003c;\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20100%\x20{\x20transform:\x20translate(0);\x20}\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20@keyframes\x20scan-down\x20{\x200%\x20{\x20top:\x20-10%;\x20}\x20100%\x20{\x20top:\x20110%;\x20}\x20}\x0a\x20\x20\x20\x20\x20\x20\x20\x20</style>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22terminal-box\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22scan-line\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22terminal-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>>>\x20SYSTEM_TAMPERING_DETECTED</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20class=\x22animate-pulse\x22\x20style=\x22color:#ffffff;\x22>🔴\x20REC</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22alert-text\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20⚠\x20ILLEGAL_OPERATION\x20⚠\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22log-stream\x22\x20id=\x22lockdown-logs\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22margin-top:\x2025px;\x20text-align:\x20center;\x20color:\x20#ffffff;\x20font-size:\x200.95rem;\x20font-weight:\x20bold;\x20letter-spacing:\x201px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20CONTEXT_MENU\x20IS\x20<span\x20style=\x22color:\x20#ff003c;\x20font-weight:\x20900;\x22>FORBIDDEN</span>\x20ON\x20THIS\x20NODE.\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20','gain','exponentialRampToValueAtTime','460269PLfENH','AudioContext','5sajaYz','currentTime','flex','addEventListener','setValueAtTime','contextmenu','log','toISOString'];_0x2ac9=function(){return _0x381049;};return _0x2ac9();}lockdownUI['id']=_0x1e1c8b(0x159),lockdownUI[_0x1e1c8b(0x144)]['cssText']='\x0a\x20\x20\x20\x20\x20\x20\x20\x20position:\x20fixed;\x20top:\x200;\x20left:\x200;\x20width:\x20100vw;\x20height:\x20100vh;\x0a\x20\x20\x20\x20\x20\x20\x20\x20background:\x20rgba(5,\x200,\x200,\x200.98);\x0a\x20\x20\x20\x20\x20\x20\x20\x20z-index:\x2099999;\x20display:\x20none;\x0a\x20\x20\x20\x20\x20\x20\x20\x20flex-direction:\x20column;\x20justify-content:\x20center;\x20align-items:\x20center;\x0a\x20\x20\x20\x20\x20\x20\x20\x20font-family:\x20monospace;\x20overflow:\x20hidden;\x0a\x20\x20\x20\x20\x20\x20\x20\x20border:\x208px\x20solid\x20#ff003c;\x20box-sizing:\x20border-box;\x0a\x20\x20\x20\x20',lockdownUI[_0x1e1c8b(0x172)]=_0x1e1c8b(0x162),document['body']['appendChild'](lockdownUI),document[_0x1e1c8b(0x16a)](_0x1e1c8b(0x16c),_0x26e29a=>{const _0x1b6e2f=_0x1e1c8b;_0x26e29a['preventDefault']();const _0xebe5ff=document['getElementById'](_0x1b6e2f(0x159)),_0x4740ab=document[_0x1b6e2f(0x177)](_0x1b6e2f(0x14f)),_0x1c50d8=navigator[_0x1b6e2f(0x173)]||_0x1b6e2f(0x142);_0xebe5ff['style'][_0x1b6e2f(0x15c)]=_0x1b6e2f(0x169),_0x4740ab[_0x1b6e2f(0x172)]=_0x1b6e2f(0x170)+_0x1c50d8+_0x1b6e2f(0x140)+Math[_0x1b6e2f(0x160)](Math['random']()*0x3e7)+_0x1b6e2f(0x14b)+Math[_0x1b6e2f(0x15e)]()['toString'](0x24)[_0x1b6e2f(0x14e)](0x7)[_0x1b6e2f(0x174)]()+_0x1b6e2f(0x14d);try{const _0x4691f6=new(window[(_0x1b6e2f(0x166))]||window[(_0x1b6e2f(0x161))])();if(_0x4691f6[_0x1b6e2f(0x155)]==='suspended')_0x4691f6[_0x1b6e2f(0x14c)]();const _0x5af6fc=_0x4691f6['createOscillator'](),_0x307128=_0x4691f6['createGain']();_0x5af6fc[_0x1b6e2f(0x158)]=_0x1b6e2f(0x152),_0x5af6fc[_0x1b6e2f(0x143)][_0x1b6e2f(0x16b)](0xc8,_0x4691f6[_0x1b6e2f(0x168)]),_0x5af6fc[_0x1b6e2f(0x143)][_0x1b6e2f(0x164)](0x1e,_0x4691f6['currentTime']+0.5),_0x307128[_0x1b6e2f(0x163)][_0x1b6e2f(0x16b)](0.1,_0x4691f6[_0x1b6e2f(0x168)]),_0x307128[_0x1b6e2f(0x163)][_0x1b6e2f(0x164)](0.001,_0x4691f6[_0x1b6e2f(0x168)]+0.5),_0x5af6fc[_0x1b6e2f(0x13e)](_0x307128),_0x307128[_0x1b6e2f(0x13e)](_0x4691f6[_0x1b6e2f(0x141)]),_0x5af6fc[_0x1b6e2f(0x16f)](),_0x5af6fc[_0x1b6e2f(0x13f)](_0x4691f6[_0x1b6e2f(0x168)]+0.5);}catch(_0x28b27f){}setTimeout(()=>{const _0x509727=_0x1b6e2f;_0xebe5ff['style'][_0x509727(0x15c)]=_0x509727(0x171);},0x7d0),console[_0x1b6e2f(0x14a)](),console[_0x1b6e2f(0x16d)](_0x1b6e2f(0x154),_0x1b6e2f(0x145));}),document[_0x1e1c8b(0x149)]=function(_0x5c3d75){const _0x282365=_0x1e1c8b;if(_0x5c3d75[_0x282365(0x15d)]==0x7b)return![];if(_0x5c3d75[_0x282365(0x15f)]&&_0x5c3d75[_0x282365(0x146)]&&(_0x5c3d75[_0x282365(0x15d)]==0x49||_0x5c3d75[_0x282365(0x15d)]==0x4a||_0x5c3d75[_0x282365(0x15d)]==0x43))return![];if(_0x5c3d75[_0x282365(0x15f)]&&_0x5c3d75[_0x282365(0x15d)]==0x55)return![];};
+</script>
+
     <script src="pgp.js"></script>
     <script src="terminal.js"></script>
     <script src="bg.js"></script>
     <script src="deadswitch.js"></script>
-    <script>
     
-    document.addEventListener('contextmenu', event => {
-        event.preventDefault();
-        alert('SYSTEM_ALERT: SOURCE_CODE_PROTECTED // ACCESS_DENIED');
-    });
-
-    
-    document.onkeydown = function(e) {
-        if (e.keyCode == 123) { 
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { 
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { 
-            return false;
-        }
-        if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { 
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { 
-            return false;
-        }
-        if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) { 
-             event.preventDefault();
-             alert('SYSTEM_ALERT: DOWNLOAD_BLOCKED');
-             return false;
-        }
-    }
-
-    
-    document.onselectstart = function() {
-        return false;
-    }
-
-(function() {
-    const element = new Image();
-    Object.defineProperty(element, 'id', {
-        get: function() {
-            window.location.href = "https://www.google.com"; 
-        }
-    });
-    console.log(element);
-})();
-
-setInterval(function() {
-    const t0 = Date.now();
-    eval('debugger'); 
-    const t1 = Date.now();
-    if (t1 - t0 > 100) {
-        document.body.innerHTML = "<h1 style='color:red;text-align:center;margin-top:20%'>INTRUSION DETECTED. IP LOGGED.</h1>";
-    }
-}, 1000);
-</script>
 </body>
 
 </html>
